@@ -82,7 +82,7 @@ public class CameraBySurfaceView extends AppCompatActivity {
                     intent.putExtra("path", videopath.toString());
                     startActivity(intent);
                 }
-                finish();
+
             }
         });
     }

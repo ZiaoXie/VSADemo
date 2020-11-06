@@ -4,6 +4,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.hardware.Camera;
+import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -73,12 +74,19 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+
         //surface第一次创建时回调
         //打开相机
         if(mCamera==null){
             mCamera = Camera.open();
-            Log.i("相机","获取相机");
+            Log.e("相机","获取相机");
             try {
+                CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_LOW);
+                Camera.Parameters parameters = mCamera.getParameters();
+                parameters.setPreviewSize(profile.videoFrameWidth,profile.videoFrameHeight);
+                mCamera.setParameters(parameters);
+
+
                 mCamera.setPreviewDisplay(holder);
                 mCamera.startPreview();
             } catch (IOException e) {
@@ -117,7 +125,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mCamera.release();
         mCamera = null;
 
-        Log.d("相机", "相机销毁");
+        Log.e("相机", "相机销毁");
     }
 
     public Uri getOutputMediaFileUri() {
@@ -168,13 +176,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     public void startRecord(String path) {
         if(TextUtils.isEmpty(path)){
-            Log.i(TAG,"Camera1 Record path is empty");
+            Log.e(TAG,"Camera1 Record path is empty");
             return;
         }
 
         mVideoPath=path;
         setUpMediaRecorder();
-
 
         try {
             mMediaRecorder.prepare();
@@ -183,33 +190,78 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         } catch (Throwable e) {
             e.printStackTrace();
             Log.e(TAG,"Camera1 start failed:"+e.getMessage());
+            stopRecord();
         }
 
     }
 
     //这个方法的顺序很重要，并且一些设置还不能少
     private void setUpMediaRecorder(){
-        //要在实例化MediaRecorder之前就解锁好相机
+
+        // Step 1: Unlock and set camera to MediaRecorder
         mCamera.unlock();
         mMediaRecorder = new MediaRecorder();
-        //将相机设置给MediaRecorder
+        mMediaRecorder.reset();
         mMediaRecorder.setCamera(mCamera);
-        // 设置录制视频源和音频源
+
+        // Step 2: Set sources
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
-        // 设置录制完成后视频的封装格式THREE_GPP为3gp.MPEG_4为mp4
+
+        // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
+        CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_LOW);
+
+        // manual set up!
+
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        // 设置录制的视频编码和音频编码
-        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
-        mMediaRecorder.setVideoSize(1920, 1080);
-        // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
-        mMediaRecorder.setVideoFrameRate(30);
-        mMediaRecorder.setVideoEncodingBitRate(1024*1024*20);
-        mMediaRecorder.setPreviewDisplay(mHolder.getSurface());
-        // 设置视频文件输出的路径
+
+        mMediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
+        mMediaRecorder.setVideoFrameRate(profile.videoFrameRate);
+        mMediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
+
+        mMediaRecorder.setAudioChannels(profile.audioChannels);
+        mMediaRecorder.setAudioEncodingBitRate(profile.audioBitRate);
+        mMediaRecorder.setAudioSamplingRate(profile.audioSampleRate);
+
+        mMediaRecorder.setAudioEncoder(profile.audioCodec);
+        //mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+        mMediaRecorder.setVideoEncoder(profile.videoCodec);
+
+        // mediaRecorder.setProfile(profile);
+
+        // Step 4: Set output file
         mMediaRecorder.setOutputFile(mVideoPath);
+
+        // Step 5: Set the preview output
+        mMediaRecorder.setPreviewDisplay(mHolder.getSurface());
+
+
+
+//        //要在实例化MediaRecorder之前就解锁好相机
+//        mCamera.unlock();
+//        mMediaRecorder = new MediaRecorder();
+//        //将相机设置给MediaRecorder
+//        mMediaRecorder.setCamera(mCamera);
+//        // 设置录制视频源和音频源
+//        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+//        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+//        // 设置录制完成后视频的封装格式THREE_GPP为3gp.MPEG_4为mp4
+//        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+//
+//        // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
+//        mMediaRecorder.setVideoSize(640, 480);
+//
+//
+//        // 设置录制的视频编码和音频编码
+//        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+//        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+//
+//        // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
+//        mMediaRecorder.setVideoFrameRate(30);
+//        mMediaRecorder.setVideoEncodingBitRate(1024*1024*20);
+//        mMediaRecorder.setPreviewDisplay(mHolder.getSurface());
+//        // 设置视频文件输出的路径
+//        mMediaRecorder.setOutputFile(mVideoPath);
 
 
         Log.i(TAG,"Camera1 OutputFilePath:"+mVideoPath);
@@ -217,7 +269,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mMediaRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
             @Override
             public void onError(MediaRecorder mr, int what, int extra) {
-                Log.d(TAG,"MediaRecorder error:"+what+"-"+extra);
+                Log.e(TAG,"MediaRecorder error:"+what+"-"+extra);
+                stopRecord();
             }
         });
 
@@ -225,11 +278,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     public void stopRecord() {
         if(mMediaRecorder!=null){
-            mCamera.lock();
             mMediaRecorder.stop();
             mMediaRecorder.release();
             mMediaRecorder=null;
-            Log.d(TAG,"Camera1 has stop record");
+            Log.e(TAG,"Camera1 has stop record");
         }
     }
 
