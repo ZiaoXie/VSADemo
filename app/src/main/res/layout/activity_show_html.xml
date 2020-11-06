@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.webview.ShowHtmlActivity">
+
+    <RelativeLayout
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100dp"
+            android:layout_alignRight="@+id/sure"/>
+        <Button
+            android:id="@+id/sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/dest"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/download1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下载文件方法1"
+            android:textSize="30dp"
+            android:padding="20dp"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="20dp"/>
+
+        <Button
+            android:id="@+id/download2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下载文件方法2"
+            android:textSize="30dp"
+            android:padding="20dp"/>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="20dp"/>
+
+        <Button
+            android:id="@+id/download3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下载文件方法3"
+            android:textSize="30dp"
+            android:padding="20dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.notification.NotificationActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="以下两个按钮为发送不同优先级的通知，仅仅作为验证，不具有本质性区别"/>
+
+    <Button
+        android:id="@+id/sendnotification1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送聊天消息"
+        />
+
+    <Button
+        android:id="@+id/sendnotification2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送订阅消息"
+        />
+
+</LinearLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/testBack"
+    tools:context=".view.audio.AudioEnterActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="调用系统录音功能"/>
+
+            <include
+                android:id="@+id/system"
+                layout="@layout/layout_menu_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="使用AudioRecorder接口实现录音功能，此功能产生的文件不能被系统媒体库识别"/>
+
+            <include
+                android:id="@+id/audio_recorder"
+                layout="@layout/layout_menu_item"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="使用MediaRecorder接口实现录音功能"/>
+            <include
+                android:id="@+id/media_recorder"
+                layout="@layout/layout_menu_item" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

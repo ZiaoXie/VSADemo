@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/testBack"
+    tools:context=".view.camera.SystemCameraActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="预先指定图片路径，再唤起系统相机，完成拍照后可以在文件管理器查看"/>
+
+            <include
+                android:id="@+id/getUriByFile"
+                layout="@layout/layout_menu_item" />
+            <include
+                android:id="@+id/dcim"
+                layout="@layout/layout_menu_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="先向系统数据库插入一条数据，再唤起系统相机，完成拍照后图片保存在系统默认路径"/>
+
+            <include
+                android:id="@+id/insertFirst"
+                layout="@layout/layout_menu_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="这个拍照不会产生新的图片，并且会在下方生成所拍图片的缩略图"/>
+            <include
+                android:id="@+id/withoutUri"
+                layout="@layout/layout_menu_item" />
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="一种测试Android 5.0上独有机制的方法，其他版本无需测试该功能"/>
+            <include
+                android:id="@+id/clipdata"
+                layout="@layout/layout_menu_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="Android 10开始引入新机制，先在手机内创建文件，再调用扫描"/>
+            <include
+                android:id="@+id/call"
+                layout="@layout/layout_menu_item" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
