@@ -13,6 +13,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -68,8 +70,9 @@ public class NotificationActivity extends AppCompatActivity {
         }
 
         Drawable d = packageManager.getApplicationIcon(applicationInfo); //xxx根据自己的情况获取drawable
-        BitmapDrawable bd = (BitmapDrawable) d;
-        Bitmap bm = bd.getBitmap();
+//        BitmapDrawable bd = (BitmapDrawable) d;
+//        Bitmap bm = bd.getBitmap();
+        Bitmap bm = drawableToBitmap(d);
 
         Intent intent = new Intent(NotificationActivity.this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(NotificationActivity.this, 0 ,intent,0);
@@ -92,6 +95,21 @@ public class NotificationActivity extends AppCompatActivity {
         manager.notify(id,notification);
 
 
+    }
+
+    /**
+     * Drawable转换成一个Bitmap
+     *
+     * @param drawable drawable对象
+     * @return
+     */
+    public static final Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = Bitmap.createBitmap( drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 
 }

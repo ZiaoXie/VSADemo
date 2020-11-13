@@ -47,10 +47,11 @@ public class FileOperationHelper {
      * <code>false</code> otherwise
      */
     public boolean copyFileAndDir(String oldPath$Name, String newPath$Name) {
+        Log.e("copy",oldPath$Name + "   " + newPath$Name);
         try {
             File oldFile = new File(oldPath$Name);
             if (oldFile.isDirectory()) {
-                File newFile = new File(newPath$Name);
+                File newFile = new File(newPath$Name+ File.separator + oldFile.getName());
                 if (!newFile.exists()) {
                     if (!newFile.mkdirs()) {
                         Log.i("--Method--", "copyFolder: cannot create directory.");
@@ -60,11 +61,7 @@ public class FileOperationHelper {
                 String[] files = oldFile.list();
                 File temp;
                 for (String file : files) {
-                    if (oldPath$Name.endsWith(File.separator)) {
-                        copyFileAndDir(oldPath$Name + file, newPath$Name + file);
-                    } else {
-                        temp = new File(oldPath$Name + File.separator + file, newPath$Name + File.separator + file);
-                    }
+                    copyFileAndDir(oldPath$Name + File.separator + file, newFile.getAbsolutePath() + File.separator + file);
                 }
             } else {
                 if (!oldFile.exists()) {
@@ -83,7 +80,7 @@ public class FileOperationHelper {
             }
             */
                 FileInputStream fileInputStream = new FileInputStream(oldPath$Name);
-                FileOutputStream fileOutputStream = new FileOutputStream(newPath$Name + File.separator + oldFile.getName());
+                FileOutputStream fileOutputStream = new FileOutputStream(newPath$Name);
                 byte[] buffer = new byte[1024];
                 int byteRead;
                 while (-1 != (byteRead = fileInputStream.read(buffer))) {
@@ -92,6 +89,7 @@ public class FileOperationHelper {
                 fileInputStream.close();
                 fileOutputStream.flush();
                 fileOutputStream.close();
+
             }
             return true;
         } catch (Exception e) {

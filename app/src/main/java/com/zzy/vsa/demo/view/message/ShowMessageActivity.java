@@ -10,17 +10,21 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.zzy.vsa.demo.R;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +41,8 @@ public class ShowMessageActivity extends AppCompatActivity {
             "content://sms/queued"
     };
 
+    String defaultSms;
+
     List<MessageListFragment> fragments = new ArrayList<MessageListFragment>();
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -48,10 +54,16 @@ public class ShowMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_message);
 
-        if ( Build.VERSION.SDK_INT  >=Build.VERSION_CODES.KITKAT  && !Telephony.Sms.getDefaultSmsPackage(ShowMessageActivity.this).equals(getPackageName())) {
-            Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, getPackageName());
-            startActivity(intent);
+
+
+        if ( Build.VERSION.SDK_INT  >=Build.VERSION_CODES.KITKAT ) {
+            defaultSms = Telephony.Sms.getDefaultSmsPackage(ShowMessageActivity.this);
+            if(!defaultSms.equals(getPackageName())){
+                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, getPackageName());
+                Log.e("defaultsms", defaultSms);
+                startActivity(intent);
+            }
         }
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -100,4 +112,38 @@ public class ShowMessageActivity extends AppCompatActivity {
 
 
     }
+
+
+    public static final String CLASS_SMS_MANAGER = "com.android.internal.telephony.SmsApplication";
+
+    public static final String METHOD_SET_DEFAULT = "setDefaultApplication";
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        if ( Build.VERSION.SDK_INT  >=Build.VERSION_CODES.KITKAT ) {
+            if(!defaultSms.equals(Telephony.Sms.getDefaultSmsPackage(ShowMessageActivity.this))){
+                Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, defaultSms);
+                startActivity(intent);
+                Toast.makeText(ShowMessageActivity.this,"短信应用恢复为默认",Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+
+//        if ( Build.VERSION.SDK_INT  >=Build.VERSION_CODES.KITKAT  && Telephony.Sms.getDefaultSmsPackage(ShowMessageActivity.this).equals(getPackageName())) {
+//            try {
+//                Class<?> smsClass = Class.forName(CLASS_SMS_MANAGER);
+//                Method method = smsClass.getMethod(METHOD_SET_DEFAULT, String.class, Context.class);
+//                method.invoke(null, defaultSms, this);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+
+    }
+
 }

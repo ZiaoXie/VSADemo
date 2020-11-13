@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -32,6 +34,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 
 public class FileManagerActivity extends AppCompatActivity {
@@ -115,12 +118,20 @@ public class FileManagerActivity extends AppCompatActivity {
 
                                                         EditText newnameExitText = (EditText)viewDialog.findViewById(R.id.input);
                                                         String newname = newnameExitText.getText().toString();
-                                                        File temp = new File(fileBean.getPath());
-                                                        File target = new File(temp.getParent()+File.separator+newname);
-                                                        temp.renameTo(target);
-                                                        fileBean.setName(newname);
-                                                        fileBean.setPath(target.getAbsolutePath());
-                                                        fileAdapter.notifyDataSetChanged();
+                                                        if (! TextUtils.isEmpty(newname)) {
+
+                                                            newname = concatsuffix(newname, new File(fileBean.getPath()).getName() );
+
+                                                            File temp = new File(fileBean.getPath());
+                                                            File target = new File(temp.getParent()+File.separator+newname);
+                                                            temp.renameTo(target);
+                                                            fileBean.setName(newname);
+                                                            fileBean.setPath(target.getAbsolutePath());
+                                                            fileAdapter.notifyDataSetChanged();
+
+                                                        } else {
+                                                            Toast.makeText(FileManagerActivity.this, "输入的新名称为空", Toast.LENGTH_SHORT).show();
+                                                        }
                                                     }
                                                 }).show();
                                         break;
@@ -160,6 +171,26 @@ public class FileManagerActivity extends AppCompatActivity {
         rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         refreshTitleState( "内部存储设备" , rootPath );
 
+    }
+
+    private String concatsuffix(String newname,String oldname){
+        if(! new File(oldname).isDirectory()){
+            String newsuffix = FileUtil.getSuffix(newname);
+            String oldsuffix = FileUtil.getSuffix(oldname);
+            if (!TextUtils.isEmpty(oldsuffix) && !oldsuffix.equals(newsuffix)){
+
+                if (TextUtils.isEmpty(newsuffix)){
+                    return  newname + "." +oldsuffix;
+                } else {
+                    int index = newname.lastIndexOf(".");
+                    return newname.substring(0,index) + "." + oldsuffix;
+                }
+            } else {
+                return newname;
+            }
+        } else {
+            return newname;
+        }
     }
 
     @Override

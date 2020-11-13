@@ -178,6 +178,44 @@ public class UriUtil {
 
     }
 
+    public static Uri getApkContentUri(Context context, File file) {
+        if (!file.exists()){
+            Toast.makeText(context, "目标文件不存在", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            return Uri.fromFile(file);
+        }
+
+        String volumeName = "external";
+        String filePath = file.getAbsolutePath();
+        String[] projection = new String[]{MediaStore.Files.FileColumns._ID};
+        Uri uri = null;
+
+        Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(volumeName), projection,
+                "(" + MediaStore.Files.FileColumns.DATA + " LIKE '%.apk' )", new String[] { filePath }, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Files.FileColumns._ID));
+
+                Uri baseUri = MediaStore.Files.getContentUri(volumeName);
+                uri = Uri.withAppendedPath(baseUri, "" + id);
+            }
+            cursor.close();
+        }
+
+
+        if (uri == null) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Files.FileColumns.DATA, filePath);
+            uri = context.getContentResolver().insert(MediaStore.Files.getContentUri(volumeName), values);
+        }
+
+        return uri;
+
+
+    }
+
     public static Uri getImageContentUri(Context context, File imageFile) {
         if (!imageFile.exists()){
             Toast.makeText(context, "目标文件不存在", Toast.LENGTH_SHORT).show();

@@ -42,6 +42,7 @@ public class FileOpenUtil {
     public static void openAppIntent(Context context , File file ){
         Uri path = FileUtil.getUriByPath(context, file);
         Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setDataAndType(path, "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
@@ -105,10 +106,11 @@ public class FileOpenUtil {
      * @param file
      */
     public static void openApplicationIntent( Context context , File file ){
-        Uri path = UriUtil.getFileContentUri(context, file);
+        Uri path = FileUtil.getUriByPath(context, file);
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setDataAndType(path, "application/*");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(path, FileUtil.getMimeType(file));
         context.startActivity(intent);
     }
 

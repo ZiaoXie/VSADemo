@@ -99,7 +99,7 @@ public class AudioEnterActivity extends AppCompatActivity {
             if (uri != null) {
                 Log.i("voicetest", uri.toString() + "+++" + uri.getAuthority());
                 String temp;
-                if(uri.getAuthority() == MediaStore.AUTHORITY){
+                if(uri.getAuthority().equals(MediaStore.AUTHORITY) ){
                     mVoicePath = FileUtil.initAudioStorage().getAbsolutePath();
                     temp = UriUtil.getFilePathFromUri(AudioEnterActivity.this,uri);
                     saveVoiceToSD(getInputStream(temp));

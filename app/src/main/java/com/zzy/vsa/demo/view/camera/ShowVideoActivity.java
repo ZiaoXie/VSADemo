@@ -2,6 +2,7 @@ package com.zzy.vsa.demo.view.camera;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.VideoView;
 import com.zzy.vsa.demo.R;
 import com.zzy.vsa.demo.appenv.AppEnv;
 import com.zzy.vsa.demo.util.BroadcastUtil;
+import com.zzy.vsa.demo.view.filemanager.ShowFileActivity;
 
 public class ShowVideoActivity extends AppCompatActivity {
 
@@ -67,6 +69,10 @@ public class ShowVideoActivity extends AppCompatActivity {
                         }
                     });
                     Toast.makeText(ShowVideoActivity.this,"完成媒体库刷新", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(ShowVideoActivity.this, ShowFileActivity.class);
+                    intent.putExtra("type","video");
+                    startActivity(intent);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -79,6 +85,10 @@ public class ShowVideoActivity extends AppCompatActivity {
                 try {
                     BroadcastUtil.scanFileBroadcast(ShowVideoActivity.this, path);
                     Toast.makeText(ShowVideoActivity.this,"完成媒体库刷新", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(ShowVideoActivity.this, ShowFileActivity.class);
+                    intent.putExtra("type","video");
+                    startActivity(intent);
                 } catch (Exception e){
                     e.printStackTrace();
                 }

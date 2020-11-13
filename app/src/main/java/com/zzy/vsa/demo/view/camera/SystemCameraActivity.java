@@ -214,6 +214,7 @@ public class SystemCameraActivity extends AppCompatActivity {
                     intent.putExtra("path", UriUtil.getFilePathFromUri(SystemCameraActivity.this, uri));
                     startActivity(intent);
                 } else {
+                    getContentResolver().delete(uri,null,null);
                     Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
                 }
                 break;
