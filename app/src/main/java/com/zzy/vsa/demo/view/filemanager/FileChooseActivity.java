@@ -117,14 +117,12 @@ public class FileChooseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String path = getIntent().getStringExtra("path");
-                Log.i("test",path + " " + rootFile.getAbsolutePath());
                 switch (operationCode){
                     case AppEnv.FILE_COPY:
-                        boolean flag = fileOperationHelper.copyFileAndDir(path,rootFile.getAbsolutePath());
-                        Log.i("test",flag+"");
+                        fileOperationHelper.copyFileAndDir(new File(path),rootFile);
                         break;
                     case AppEnv.FILE_MOVE:
-                        fileOperationHelper.copyFileAndDir(path,rootFile.getAbsolutePath());
+                        fileOperationHelper.copyFileAndDir(new File(path),rootFile);
                         fileOperationHelper.delete(path);
                         break;
                 }

@@ -46,31 +46,37 @@ public class FileOperationHelper {
      * @return <code>true</code> if and only if the file was copied;
      * <code>false</code> otherwise
      */
-    public boolean copyFileAndDir(String oldPath$Name, String newPath$Name) {
+    public boolean copyFileAndDir(File oldPath$Name, File newPath$Name) {
         Log.e("copy",oldPath$Name + "   " + newPath$Name);
         try {
-            File oldFile = new File(oldPath$Name);
-            if (oldFile.isDirectory()) {
-                File newFile = new File(newPath$Name+ File.separator + oldFile.getName());
+
+            if (oldPath$Name.isDirectory()) {
+                File newFile = new File(newPath$Name+ File.separator + oldPath$Name.getName());
                 if (!newFile.exists()) {
                     if (!newFile.mkdirs()) {
                         Log.i("--Method--", "copyFolder: cannot create directory.");
                         return false;
                     }
                 }
-                String[] files = oldFile.list();
+                File[] files = oldPath$Name.listFiles();
                 File temp;
-                for (String file : files) {
-                    copyFileAndDir(oldPath$Name + File.separator + file, newFile.getAbsolutePath() + File.separator + file);
+                for (File file : files) {
+                    if(file.isDirectory()){
+                        copyFileAndDir(new File(oldPath$Name.getAbsolutePath() + File.separator + file.getName()),
+                                new File(newFile.getAbsolutePath() + File.separator + file.getName()) );
+                    } else {
+                        copyFileAndDir(new File(oldPath$Name.getAbsolutePath() + File.separator + file.getName()),
+                                new File(newFile.getAbsolutePath() ) );
+                    }
                 }
             } else {
-                if (!oldFile.exists()) {
+                if (!oldPath$Name.exists()) {
                     Log.i("--Method--", "copyFile:  oldFile not exist.");
                     return false;
-                } else if (!oldFile.isFile()) {
+                } else if (!oldPath$Name.isFile()) {
                     Log.i("--Method--", "copyFile:  oldFile not file.");
                     return false;
-                } else if (!oldFile.canRead()) {
+                } else if (!oldPath$Name.canRead()) {
                     Log.i("--Method--", "copyFile:  oldFile cannot read.");
                     return false;
                 }
@@ -80,7 +86,7 @@ public class FileOperationHelper {
             }
             */
                 FileInputStream fileInputStream = new FileInputStream(oldPath$Name);
-                FileOutputStream fileOutputStream = new FileOutputStream(newPath$Name);
+                FileOutputStream fileOutputStream = new FileOutputStream(newPath$Name + File.separator + oldPath$Name.getName());
                 byte[] buffer = new byte[1024];
                 int byteRead;
                 while (-1 != (byteRead = fileInputStream.read(buffer))) {

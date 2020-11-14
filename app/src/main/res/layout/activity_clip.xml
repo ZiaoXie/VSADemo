@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="剪贴板测试1：长按输入框" />
+                android:text="剪贴板测试1：长按输入框文字并复制输入框内容" />
 
             <LinearLayout
                 android:layout_width="match_parent"
