@@ -80,4 +80,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.tencent.tauth:qqopensdk:3.51.1'
+
 }

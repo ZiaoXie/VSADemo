@@ -17,7 +17,9 @@ import com.zzy.vsa.demo.appenv.FileType;
 import com.zzy.vsa.demo.appenv.AppEnv;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -32,24 +34,30 @@ public class FileUtil {
      * 初始化图片存储位置
      */
     public static File initPhotoStorage() {
-        return new File(Environment.getExternalStorageDirectory().getPath() + File.separator + AppEnv.PACKAGE_NAME + File.separator + System.currentTimeMillis() + ".jpg");
+        return new File(createName(".jpg"));
     }
 
     public static File initVideoStorage() {
-        return new File(Environment.getExternalStorageDirectory().getPath() + File.separator + AppEnv.PACKAGE_NAME + File.separator + System.currentTimeMillis() + ".mp4");
+        return new File(createName(".mp4"));
+//        return new File(Environment.getExternalStorageDirectory().getPath() + File.separator + AppEnv.PACKAGE_NAME + File.separator + System.currentTimeMillis() + ".mp4");
     }
 
     public static File initAudioStorage() {
-        return new File(Environment.getExternalStorageDirectory().getPath() + File.separator + AppEnv.PACKAGE_NAME + File.separator + System.currentTimeMillis() + ".amr");
+        return new File(createName(".amr"));
     }
 
     public static File initPCMAudioStorage() {
-        return new File(Environment.getExternalStorageDirectory().getPath() + File.separator + AppEnv.PACKAGE_NAME + File.separator + System.currentTimeMillis() + ".pcm");
+        return new File(createName(".pcm"));
     }
 
     public static String initWebDownloaderStorage(String filename){
 
         return Environment.getExternalStorageDirectory().getPath() + File.separator + AppEnv.PACKAGE_NAME + File.separator + System.currentTimeMillis() + filename ;
+    }
+
+    private static String createName(String suffix){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
+        return Environment.getExternalStorageDirectory().getPath() + File.separator + AppEnv.PACKAGE_NAME + File.separator + sdf.format(new Date()) + suffix;
     }
 
 
@@ -219,6 +227,5 @@ public class FileUtil {
 
         return size + " B";
     }
-
 
 }
