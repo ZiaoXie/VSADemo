@@ -73,137 +73,171 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="测试分享文件"
-                android:textSize="20dp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/targetfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="20dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="测试分享文件"
+                    android:textSize="20dp" />
 
-            <Button
-                android:id="@+id/selectfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="点击此按钮选择要分享的文件" />
+                <TextView
+                    android:id="@+id/targetfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="20dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="以下是文件分享的不同实现方式：" />
+                <Button
+                    android:id="@+id/selectfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="点击此按钮选择要分享的文件" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="case 3:直接发送Intent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="以下是文件分享的不同实现方式：" />
 
-            <Button
-                android:id="@+id/sharefile1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="点击测试"
-                android:textAllCaps="false" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="case 3:直接发送Intent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="case 4:筛选能够接收该Intent的应用并显示" />
+                <Button
+                    android:id="@+id/sharefile1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击测试"
+                    android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/sharefile2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="点击测试" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="case 4:筛选能够接收该Intent的应用并显示" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="case 5:ACTION_CHOOSER接口" />
+                <Button
+                    android:id="@+id/sharefile2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击测试" />
 
-            <Button
-                android:id="@+id/sharefile3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="点击测试"
-                android:textAllCaps="false" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="case 5:ACTION_CHOOSER接口" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="case 6:ACTION_PICK_ACTIVITY接口" />
+                <Button
+                    android:id="@+id/sharefile3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击测试"
+                    android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/sharefile4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="点击测试"
-                android:textAllCaps="false" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="case 6:ACTION_PICK_ACTIVITY接口" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="case 7:Intent.EXTRA_INITIAL_INTENTS接口" />
+                <Button
+                    android:id="@+id/sharefile4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击测试"
+                    android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/sharefile5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="点击测试"
-                android:textAllCaps="false" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="case 7:Intent.EXTRA_INITIAL_INTENTS接口" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="测试分享安装应用"
-                android:textSize="20dp" />
+                <Button
+                    android:id="@+id/sharefile5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击测试"
+                    android:textAllCaps="false" />
 
-            <TextView
-                android:id="@+id/targetapk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="20dp" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/selectapk"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="点击此按钮选择要分享的安装包" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="case 8:分享apk" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="测试分享安装应用"
+                    android:textSize="20dp" />
 
-            <Button
-                android:id="@+id/installapk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="系统数据库中的uri"
-                android:textAllCaps="false" />
-            <Button
-                android:id="@+id/installapk2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="fileprovider生成uri"
-                android:textAllCaps="false" />
-            <Button
-                android:id="@+id/installapk3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="file://格式uri"
-                android:textAllCaps="false" />
+                <TextView
+                    android:id="@+id/targetapk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="20dp" />
 
+                <Button
+                    android:id="@+id/selectapk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="点击此按钮选择要分享的安装包" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="case 8:分享apk" />
+
+                <Button
+                    android:id="@+id/installapk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="系统数据库中的uri"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/installapk2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="fileprovider生成uri"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/installapk3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="file://格式uri"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="测试QQ分享API"
+                    android:textSize="20dp" />
+                <Button
+                    android:id="@+id/qqsharedefault"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QQ分享图文信息"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

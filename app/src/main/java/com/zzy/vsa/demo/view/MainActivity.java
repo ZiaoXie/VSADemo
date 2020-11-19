@@ -26,6 +26,7 @@ import com.zzy.vsa.demo.appenv.AppEnv;
 import com.zzy.vsa.demo.common.PermissionManager;
 import com.zzy.vsa.demo.view.audio.AudioEnterActivity;
 import com.zzy.vsa.demo.view.camera.CameraEnterActivity;
+import com.zzy.vsa.demo.view.fileoperation.FileOperationActivity;
 import com.zzy.vsa.demo.view.message.ShowMessageActivity;
 import com.zzy.vsa.demo.view.notification.NotificationActivity;
 import com.zzy.vsa.demo.view.remotecontrol.RemoteControlActivity;
@@ -46,12 +47,45 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.CALL_PHONE,
             Manifest.permission.READ_SMS,
             Manifest.permission.SEND_SMS,
+            Manifest.permission.ACCESS_NETWORK_STATE,
     };
     String TAG = "MainActivity";
 
+    //1.测试调用摄像头
+    RelativeLayout camera;
+    TextView cameraText;
 
-    RelativeLayout camera,audio,filemanager,clip,webview,remotecontrol,share,notification,call,message;
-    TextView cameraText,audioText,filemanagerText,clipText,webviewText,remotecontrolText,shareText,notificationText,callText,messageText;
+    //2.测试使用录音
+    RelativeLayout audio;
+    TextView audioText;
+
+    //3.打开文件管理器
+    RelativeLayout filemanager;
+    TextView filemanagerText;
+
+    RelativeLayout clip;
+    TextView clipText;
+
+    RelativeLayout webview;
+    TextView webviewText;
+
+    RelativeLayout fileoperation;
+    TextView fileoperationText;
+
+    RelativeLayout remotecontrol;
+    TextView remotecontrolText;
+
+    RelativeLayout share;
+    TextView shareText;
+
+    RelativeLayout notification;
+    TextView notificationText;
+
+    RelativeLayout call;
+    TextView callText;
+
+    RelativeLayout message;
+    TextView messageText;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        filemanager =(RelativeLayout) findViewById(R.id.filemanager);
+        filemanager = (RelativeLayout) findViewById(R.id.filemanager);
         filemanagerText = (TextView) filemanager.findViewById(R.id.text);
         filemanagerText.setText("3.打开文件管理器");
         filemanager.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +141,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ShowHtmlActivity.class));
+            }
+        });
+
+        fileoperation = (RelativeLayout) findViewById(R.id.fileoperation);
+        fileoperationText = (TextView) fileoperation.findViewById(R.id.text);
+        fileoperationText.setText("6.测试文件操作功能");
+        fileoperation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FileOperationActivity.class));
             }
         });
 
@@ -164,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
 
         PermissionManager.requestPermission(this, permissions, AppEnv.RequestPermissions);
 
-        File dir = new File(Environment.getExternalStorageDirectory().getPath() + "/"+ AppEnv.PACKAGE_NAME);
-        if(!dir.exists()){
+        File dir = new File(Environment.getExternalStorageDirectory().getPath() + "/" + AppEnv.PACKAGE_NAME);
+        if (!dir.exists()) {
             dir.mkdirs();
         }
         getPackageName();
@@ -186,8 +230,6 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         PermissionManager.requestPermissionsResult(this, requestCode, grantResults);
     }
-
-
 
 
 }

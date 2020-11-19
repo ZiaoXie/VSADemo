@@ -15,6 +15,7 @@ import android.util.Log;
 
 
 import com.zzy.vsa.demo.appenv.FileType;
+import com.zzy.vsa.demo.util.BroadcastUtil;
 import com.zzy.vsa.demo.util.FileUtil;
 
 public class FileOperationHelper {
@@ -38,6 +39,12 @@ public class FileOperationHelper {
     }
 
 
+    public boolean copy(File oldPath$Name, File newPath$Name){
+        boolean flag = copyFileAndDir(oldPath$Name, newPath$Name);
+        BroadcastUtil.scanFileBroadcast(mContext, newPath$Name.getAbsolutePath());
+        return flag;
+    }
+
     /**
      * 复制单个文件
      *
@@ -46,7 +53,7 @@ public class FileOperationHelper {
      * @return <code>true</code> if and only if the file was copied;
      * <code>false</code> otherwise
      */
-    public boolean copyFileAndDir(File oldPath$Name, File newPath$Name) {
+    private boolean copyFileAndDir(File oldPath$Name, File newPath$Name) {
         Log.e("copy",oldPath$Name + "   " + newPath$Name);
         try {
 

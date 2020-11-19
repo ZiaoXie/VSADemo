@@ -90,7 +90,7 @@ public class WebDownloadHelper {
         new DownloadTask().execute(url, destPath);
     }
 
-    private class DownloadTask extends AsyncTask<String, Void, Void> {
+    public class DownloadTask extends AsyncTask<String, Void, Void> {
         // 传递两个参数：URL 和 目标路径
         private String url;
         private String destPath;

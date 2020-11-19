@@ -30,6 +30,11 @@ public class FileUtil {
 
     final static String TAG = "FileUtil";
 
+    public static String getAppRootPath(){
+        return Environment.getExternalStorageDirectory().getPath() + File.separator + AppEnv.PACKAGE_NAME;
+    }
+
+
     /**
      * 初始化图片存储位置
      */

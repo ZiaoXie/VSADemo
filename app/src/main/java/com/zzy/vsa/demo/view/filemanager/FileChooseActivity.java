@@ -119,10 +119,10 @@ public class FileChooseActivity extends AppCompatActivity {
                 String path = getIntent().getStringExtra("path");
                 switch (operationCode){
                     case AppEnv.FILE_COPY:
-                        fileOperationHelper.copyFileAndDir(new File(path),rootFile);
+                        fileOperationHelper.copy(new File(path),rootFile);
                         break;
                     case AppEnv.FILE_MOVE:
-                        fileOperationHelper.copyFileAndDir(new File(path),rootFile);
+                        fileOperationHelper.copy(new File(path),rootFile);
                         fileOperationHelper.delete(path);
                         break;
                 }

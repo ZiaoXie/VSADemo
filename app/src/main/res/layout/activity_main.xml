@@ -31,6 +31,9 @@
             <include android:id="@+id/webviewdownload"
                 layout="@layout/layout_menu_item"/>
 
+            <include android:id="@+id/fileoperation"
+                layout="@layout/layout_menu_item"/>
+
             <include android:id="@+id/remotecontrol"
                 layout="@layout/layout_menu_item"/>
 

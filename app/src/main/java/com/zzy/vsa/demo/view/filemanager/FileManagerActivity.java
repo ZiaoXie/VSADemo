@@ -168,7 +168,11 @@ public class FileManagerActivity extends AppCompatActivity {
             }
         });
 
-        rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        rootPath = getIntent().getStringExtra("rootPath");
+        if (rootPath == null){
+            rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        }
+
         refreshTitleState( "内部存储设备" , rootPath );
 
     }
