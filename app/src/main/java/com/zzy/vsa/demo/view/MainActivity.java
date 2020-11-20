@@ -26,6 +26,7 @@ import com.zzy.vsa.demo.appenv.AppEnv;
 import com.zzy.vsa.demo.common.PermissionManager;
 import com.zzy.vsa.demo.view.audio.AudioEnterActivity;
 import com.zzy.vsa.demo.view.camera.CameraEnterActivity;
+import com.zzy.vsa.demo.view.fileoperation.FileClassificationActivity;
 import com.zzy.vsa.demo.view.fileoperation.FileOperationActivity;
 import com.zzy.vsa.demo.view.message.ShowMessageActivity;
 import com.zzy.vsa.demo.view.notification.NotificationActivity;
@@ -150,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
         fileoperation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FileOperationActivity.class));
+//                startActivity(new Intent(MainActivity.this, FileOperationActivity.class));
+                startActivity(new Intent(MainActivity.this, FileClassificationActivity.class));
             }
         });
 

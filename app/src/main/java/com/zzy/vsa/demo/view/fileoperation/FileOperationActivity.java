@@ -1,19 +1,25 @@
 package com.zzy.vsa.demo.view.fileoperation;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,29 +37,40 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 public class FileOperationActivity extends AppCompatActivity {
 
     final int APK = 0;
-    MyHandler handler = new MyHandler(FileOperationActivity.this);
 
     Button downloadapk;
     TextView apkdownloadresult;
     Button apk2zip;
     TextView apk2zip_result;
     Button apk2zip_view;
-    String apk_path;
+    String apk_path = "";
 
     Button zip2apk;
     TextView zip2apk_result;
     Button zip2apk_view;
-    String zip_path;
+    String zip_path = "";
 
-
+    AlertDialog alertDialog;
+    View viewDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_operation);
+
+        viewDialog = (View)getLayoutInflater().inflate(R.layout.layout_progress_dialog,null);
+        alertDialog = new AlertDialog.Builder(FileOperationActivity.this).setTitle("下载进度")
+                .setCancelable(false).setView(viewDialog).create();
 
         initAPK();
 
@@ -87,11 +104,16 @@ public class FileOperationActivity extends AppCompatActivity {
                 String url = "http://192.168.1.37:9003/ReBuildApk/rebuildapk/download?file=/17187/77287/2020/11/04/com.zzy.vsa.demo_1_1604475819271_uusafe_signed_64.apk&type=1";
                 apk_path = FileUtil.getAppRootPath() + File.separator + URLUtil.guessFileName(url,null,"application/vnd.android.package-archive");
                 if(! new File(apk_path).exists()){
-                    downloadByURL(url, apk_path,String.valueOf(APK));
+//                    downloadByURL(url, apk_path,String.valueOf(APK));
+                    alertDialog.show();
+
+                    saveFile(url, apk_path,APK);
                 } else {
-                    Message msg = new Message();
-                    msg.what = APK;
-                    handler.sendMessage(msg);
+                    apkdownloadresult.setVisibility(View.VISIBLE);
+                    apkdownloadresult.setText("下载文件为："+apk_path);
+                    apk2zip.setVisibility(View.VISIBLE);
+                    zip2apk.setVisibility(View.VISIBLE);
+                    alertDialog.dismiss();
                     Toast.makeText(FileOperationActivity.this, "文件已存在", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -124,27 +146,6 @@ public class FileOperationActivity extends AppCompatActivity {
         zip2apk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Cursor c = null;
-//                try {
-//                    c = getContentResolver().query(MediaStore.Files.getContentUri("external"), null,
-//                            "(" + MediaStore.Files.FileColumns.DATA + " LIKE '%.zip' )", null, null);
-//                    if(c != null && c.moveToFirst()){
-//                        String path = c.getString(c.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));// 路径
-//                        String title = c.getString(c.getColumnIndex(MediaStore.MediaColumns.TITLE));
-//
-//                        FileOperationHelper.getInstance(FileOperationActivity.this).copy(new File(path),new File(FileUtil.getAppRootPath()));
-//
-//                        c.close();
-//                    } else {
-//                        Toast.makeText(FileOperationActivity.this, "搜索不到本地ZIP",Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    if (c != null) {
-//                        c.close();
-//                    }
-//                }
 
                 if (TextUtils.isEmpty(zip_path) || TextUtils.isEmpty(apk_path)){
                     return;
@@ -171,83 +172,89 @@ public class FileOperationActivity extends AppCompatActivity {
     }
 
 
-    public void downloadByURL(String url, String destPath, String msg){
-        new DownloadTask().execute(url, destPath, msg);
-    }
+    private void saveFile(String url, final String destPath, final int what) {
 
-    private class DownloadTask extends AsyncTask<String, Void, Void> {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
-        private int what;
+        Request request = new Request.Builder().addHeader("Accept-Encoding", "identity")
+                .url(url)
+                .get()
+                .build();
 
-        @Override
-        protected void onPreExecute() {
-//            log.info("开始下载");
-        }
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("tag", "onFailure: " + e.getMessage());
+            }
 
-        @Override
-        protected Void doInBackground(String... params) {
-//            log.debug("doInBackground. url:{}, dest:{}", params[0], params[1]);
-            what = Integer.parseInt(params[2]);
-            OutputStream out = null;
-            HttpURLConnection urlConnection = null;
-            try {
-                URL urltarget = new URL(params[0]);
-                urlConnection = (HttpURLConnection) urltarget.openConnection();
-                urlConnection.setConnectTimeout(15000);
-                urlConnection.setReadTimeout(15000);
-                InputStream in = urlConnection.getInputStream();
-                out = new FileOutputStream(params[1]);
-                byte[] buffer = new byte[10 * 1024];
-                int len;
-                while ((len = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, len);
-                }
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final ResponseBody body = response.body();        // 获取到请求体
+                InputStream inputStream = body.byteStream();    // 转换成字节流
+                final long totallength = body.contentLength();
+
+
+                final TextView tv = viewDialog.findViewById(R.id.tv);
+
+                long count = 0;
+
+                try {
+                    // 获取到输出流，写入到的地址
+                    FileOutputStream outputStream = new FileOutputStream(new File(destPath));
+                    int length = -1;
+                    byte[] bytes = new byte[1024 * 10];
+                    while ((length = inputStream.read(bytes)) != -1) {
+                        // 写入文件
+                        outputStream.write(bytes, 0, length);
+                        count += length;
+
+                        final long finalCount = count;
+                        final int finalLenght = length;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(finalCount< totallength){
+                                    tv.setText((int) (100 * finalCount / totallength) + "%");  // 设置进度文本 （100 * 当前进度 / 总进度）
+                                } else {
+                                    tv.setText("正在下载:"+ FileUtil.sizeToChange(finalCount) );
+                                }
+
+                            }
+                        });
+                        Log.e("tag", "progress" + count + "max" + totallength);
                     }
+                    inputStream.close();        // 关闭输入流
+                    outputStream.close();       // 关闭输出流
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 如果写入的进度值完毕，Toast
+                            Toast.makeText(FileOperationActivity.this, "下载完成", Toast.LENGTH_SHORT).show();
+//                            alertDialog.dismiss();
+//                            pb.setProgress(0);
+                            apkdownloadresult.setVisibility(View.VISIBLE);
+                            apkdownloadresult.setText("下载文件为："+apk_path);
+                            apk2zip.setVisibility(View.VISIBLE);
+                            zip2apk.setVisibility(View.VISIBLE);
+                            alertDialog.dismiss();
+                        }
+                    });
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            Message msg = new Message();
-            msg.what = what;
-            handler.sendMessage(msg);
-        }
-    }
-
-    private class MyHandler extends Handler{
-        private WeakReference<FileOperationActivity> mWeakReference;
-
-        public MyHandler(FileOperationActivity activity) {
-            mWeakReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            FileOperationActivity activity = mWeakReference.get();
-            switch (msg.what){
-                case APK:
-                    apkdownloadresult.setVisibility(View.VISIBLE);
-                    apkdownloadresult.setText("下载文件为："+apk_path);
-                    apk2zip.setVisibility(View.VISIBLE);
-                    zip2apk.setVisibility(View.VISIBLE);
-                    break;
 
             }
-        }
+        });
+
     }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        new File(apk_path).delete();
+        new File(zip_path).delete();
+
+    }
+
 }

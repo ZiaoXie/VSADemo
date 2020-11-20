@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.MainActivity"
+    android:gravity="center_horizontal"
+    android:background="#4169E1">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="文件类别"
+                android:textColor="#ffffff"
+                android:textSize="40dp"
+                />
+
+            <include android:id="@+id/document"
+                layout="@layout/layout_menu_item"/>
+
+            <include android:id="@+id/video"
+                layout="@layout/layout_menu_item"/>
+
+            <include android:id="@+id/image"
+                layout="@layout/layout_menu_item"/>
+
+            <include android:id="@+id/audio"
+                layout="@layout/layout_menu_item"/>
+
+            <include android:id="@+id/compressed"
+                layout="@layout/layout_menu_item"/>
+
+            <include android:id="@+id/others"
+                layout="@layout/layout_menu_item"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>
