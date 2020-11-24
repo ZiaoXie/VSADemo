@@ -26,22 +26,22 @@
                 android:textSize="40dp"
                 />
 
-            <include android:id="@+id/document"
+            <include android:id="@+id/document_classification"
                 layout="@layout/layout_menu_item"/>
 
-            <include android:id="@+id/video"
+            <include android:id="@+id/video_classification"
                 layout="@layout/layout_menu_item"/>
 
-            <include android:id="@+id/image"
+            <include android:id="@+id/image_classification"
                 layout="@layout/layout_menu_item"/>
 
-            <include android:id="@+id/audio"
+            <include android:id="@+id/audio_classification"
                 layout="@layout/layout_menu_item"/>
 
-            <include android:id="@+id/compressed"
+            <include android:id="@+id/compressed_classification"
                 layout="@layout/layout_menu_item"/>
 
-            <include android:id="@+id/others"
+            <include android:id="@+id/others_classification"
                 layout="@layout/layout_menu_item"/>
 
         </LinearLayout>

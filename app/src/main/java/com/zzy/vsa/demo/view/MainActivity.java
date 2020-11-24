@@ -32,6 +32,7 @@ import com.zzy.vsa.demo.view.message.ShowMessageActivity;
 import com.zzy.vsa.demo.view.notification.NotificationActivity;
 import com.zzy.vsa.demo.view.remotecontrol.RemoteControlActivity;
 import com.zzy.vsa.demo.view.share.ShareActivity;
+import com.zzy.vsa.demo.view.watermark.WaterMarkActivity;
 import com.zzy.vsa.demo.view.webview.ShowHtmlActivity;
 
 
@@ -87,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout message;
     TextView messageText;
+
+    RelativeLayout watermark;
+    TextView watermarkText;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,6 +211,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        watermark = (RelativeLayout) findViewById(R.id.watermark);
+        watermarkText = (TextView) watermark.findViewById(R.id.text);
+        watermarkText.setText("11.测试水印");
+        watermark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, WaterMarkActivity.class));
+            }
+        });
 
         PermissionManager.requestPermission(this, permissions, AppEnv.RequestPermissions);
 
@@ -214,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        getPackageName();
 
         Button button = (Button) findViewById(R.id.test);
         button.setOnClickListener(new View.OnClickListener() {

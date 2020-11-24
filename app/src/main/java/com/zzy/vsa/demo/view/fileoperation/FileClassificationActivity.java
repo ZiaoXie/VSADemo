@@ -17,7 +17,7 @@ public class FileClassificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_classification);
 
-        RelativeLayout document = (RelativeLayout) findViewById(R.id.document);
+        RelativeLayout document = (RelativeLayout) findViewById(R.id.document_classification);
         TextView documentText = (TextView) document.findViewById(R.id.text);
         documentText.setText("文档");
         document.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +29,7 @@ public class FileClassificationActivity extends AppCompatActivity {
             }
         });
 
-        RelativeLayout video = (RelativeLayout) findViewById(R.id.video);
+        RelativeLayout video = (RelativeLayout) findViewById(R.id.video_classification);
         TextView videoText = (TextView) video.findViewById(R.id.text);
         videoText.setText("视频");
         video.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +41,7 @@ public class FileClassificationActivity extends AppCompatActivity {
             }
         });
 
-        RelativeLayout image = (RelativeLayout) findViewById(R.id.image);
+        RelativeLayout image = (RelativeLayout) findViewById(R.id.image_classification);
         TextView imageText = (TextView) image.findViewById(R.id.text);
         imageText.setText("图片");
         image.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +53,7 @@ public class FileClassificationActivity extends AppCompatActivity {
             }
         });
 
-        RelativeLayout audio = (RelativeLayout) findViewById(R.id.audio);
+        RelativeLayout audio = (RelativeLayout) findViewById(R.id.audio_classification);
         TextView audioText = (TextView) audio.findViewById(R.id.text);
         audioText.setText("音频");
         audio.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class FileClassificationActivity extends AppCompatActivity {
             }
         });
 
-        RelativeLayout compressed = (RelativeLayout) findViewById(R.id.compressed);
+        RelativeLayout compressed = (RelativeLayout) findViewById(R.id.compressed_classification);
         TextView compressedText = (TextView) compressed.findViewById(R.id.text);
         compressedText.setText("压缩包");
         compressed.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +77,7 @@ public class FileClassificationActivity extends AppCompatActivity {
             }
         });
 
-        RelativeLayout others = (RelativeLayout) findViewById(R.id.others);
+        RelativeLayout others = (RelativeLayout) findViewById(R.id.others_classification);
         TextView othersText = (TextView) others.findViewById(R.id.text);
         othersText.setText("其他");
         others.setOnClickListener(new View.OnClickListener() {

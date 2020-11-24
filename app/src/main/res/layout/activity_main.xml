@@ -49,6 +49,9 @@
             <include android:id="@+id/message"
                 layout="@layout/layout_menu_item"/>
 
+            <include android:id="@+id/watermark"
+                layout="@layout/layout_menu_item"/>
+
 
 
             <Button

@@ -155,11 +155,14 @@ public class FileDownloadActivity extends AppCompatActivity {
             case "audio":
                 current_item = audio_item;
                 break;
-            case "compress":
+            case "compressed":
                 current_item = compress_item;
                 break;
             case "others":
                 current_item = others_item;
+                break;
+            default:
+                current_item = image_item;
                 break;
         }
         myAdapter = new MyAdapter(current_item);
@@ -355,6 +358,23 @@ public class FileDownloadActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        for(FileClassificationBean item : current_item){
+            String path = item.getPath();
+            if(!TextUtils.isEmpty(path)){
+                File file = new File(path);
+                if(file.exists()){
+                    file.delete();
+                }
+            }
+
+        }
 
     }
 
