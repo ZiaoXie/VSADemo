@@ -1,8 +1,18 @@
 LOCAL_PATH := $(call my-dir)
+
+LOCAL_PROJECTS_SRC_FILES := \
+        src/common.cpp \
+        src/native.cpp \
+        src/file_operation.cpp \
+
+########################### build for shared library
 include $(CLEAR_VARS)
-#编译生成的文件的类库叫什么名字，就是刚才我前面提到的名字
-LOCAL_MODULE    := JNITest
-LOCAL_C_INCLUDES    += $(LOCAL_PATH)
-#要编译的c文件，上面咱们刚创建的
-LOCAL_SRC_FILES := JNITest.c
+LOCAL_MODULE        := JNITest
+LOCAL_SRC_FILES     += $(LOCAL_PROJECTS_SRC_FILES)
+LOCAL_C_INCLUDES    += $(LOCAL_PATH)/inc
+LOCAL_CFLAGS        := -Os -fvisibility=hidden
+LOCAL_LDLIBS        += -llog -lz
+ifneq ($(TARGET_ARCH),arm64)
+LOCAL_CFLAGS        += -DHAVE_PTHREADS
+endif
 include $(BUILD_SHARED_LIBRARY)
