@@ -5,4 +5,4 @@
 
 jint copyFile(jstring jsrc, jstring jdes);
 
-#endif //VSADEMO_FILE_OPERATION_H
+#endif // VSADEMO_FILE_OPERATION_H
