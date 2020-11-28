@@ -114,13 +114,13 @@ public class FileUtil {
     public static String getMimeType(File file){
         String suffix = getSuffix(file);
         if (TextUtils.isEmpty(suffix)) {
-            return "file/*";
+            return "*/*";
         }
         String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(suffix);
         if (!TextUtils.isEmpty(type)) {
             return type;
         }
-        return "file/*";
+        return "*/*";
     }
 
 

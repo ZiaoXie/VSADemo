@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/type"
@@ -32,7 +33,5 @@
         android:text="打开文件"
         android:layout_toRightOf="@id/downloadview"
         android:layout_alignTop="@id/downloadview"/>
-
-
 
 </RelativeLayout>

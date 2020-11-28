@@ -3,12 +3,18 @@ package com.zzy.vsa.demo.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 import java.io.File;
 
 public class FileOpenUtil {
 
     public static void openIntent(Context context, File file){
+
+        if(!file.exists()){
+            Toast.makeText(context, "该文件不存在", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         switch (FileUtil.getFileType(file)){
             case apk:
