@@ -52,6 +52,12 @@
             <include android:id="@+id/watermark"
                 layout="@layout/layout_menu_item"/>
 
+            <include android:id="@+id/gateway"
+                layout="@layout/layout_menu_item"/>
+
+            <include android:id="@+id/sandbox"
+                layout="@layout/layout_menu_item"/>
+
 
 
             <Button

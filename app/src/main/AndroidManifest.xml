@@ -23,9 +23,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.watermark.SurfaceViewWaterMarkActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
-        <activity android:name=".view.watermark.WaterMarkActivity"
+        <activity android:name=".view.gateway.GateWayActivity"></activity>
+        <activity
+            android:name=".view.watermark.SurfaceViewWaterMarkActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".view.watermark.WaterMarkActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".view.fileoperation.FileDownloadActivity"

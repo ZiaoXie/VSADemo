@@ -152,6 +152,7 @@ public class FileDownloadActivity extends AppCompatActivity {
                     }
                 });
 
+                new File(current_item.get(position).getPath()).delete();
                 Log.e("tag", "onFailure: " + e.getMessage());
             }
 
@@ -180,9 +181,10 @@ public class FileDownloadActivity extends AppCompatActivity {
                     current_item.get(position).setPath(fileName);
                 }
 
-                File targetfile = new File(fileName);
+                File targetfile = new File(fileName + ".temp");
+                File resfile = new File(fileName);
 
-                if (targetfile.exists()){
+                if (resfile.exists()){
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -226,7 +228,7 @@ public class FileDownloadActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                        Log.e("tag", "progress" + count + "max" + totallength);
+//                        Log.e("tag", "progress" + count + "max" + totallength);
                     }
                     inputStream.close();        // 关闭输入流
                     outputStream.close();       // 关闭输出流
@@ -239,6 +241,9 @@ public class FileDownloadActivity extends AppCompatActivity {
                             holder.showDownload("文件下载路径:"+ current_item.get(position).getPath());
                         }
                     });
+
+
+                    targetfile.renameTo(resfile);
 
                 } catch (Exception e) {
                     runOnUiThread(new Runnable() {
@@ -276,7 +281,7 @@ public class FileDownloadActivity extends AppCompatActivity {
         document_item.clear();
         document_item.add(new FileClassificationBean("pages", "http://192.168.1.98:8888/dev_share/fileEncrypt/files/easy.pages"));
         document_item.add(new FileClassificationBean("doc", "http://192.168.1.98:8888/dev_share/fileEncrypt/files/doc.doc"));
-        document_item.add(new FileClassificationBean("html", ""));
+        document_item.add(new FileClassificationBean("html", "http://ikb.zhizhangyi.com/pdt/index.html"));
         document_item.add(new FileClassificationBean("java", "http://192.168.1.98:8888/dev_share/fileEncrypt/files/CheckCategroyExist.java"));
         document_item.add(new FileClassificationBean("xls", "http://192.168.1.98:8888/dev_share/fileEncrypt/files/xls.xls"));
         document_item.add(new FileClassificationBean("py", "http://192.168.1.98:8888/dev_share/fileEncrypt/files/cmd.py"));

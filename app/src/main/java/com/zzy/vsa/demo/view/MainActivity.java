@@ -28,6 +28,7 @@ import com.zzy.vsa.demo.view.audio.AudioEnterActivity;
 import com.zzy.vsa.demo.view.camera.CameraEnterActivity;
 import com.zzy.vsa.demo.view.fileoperation.FileClassificationActivity;
 import com.zzy.vsa.demo.view.fileoperation.FileOperationActivity;
+import com.zzy.vsa.demo.view.gateway.GateWayActivity;
 import com.zzy.vsa.demo.view.message.ShowMessageActivity;
 import com.zzy.vsa.demo.view.notification.NotificationActivity;
 import com.zzy.vsa.demo.view.remotecontrol.RemoteControlActivity;
@@ -91,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout watermark;
     TextView watermarkText;
+
+    RelativeLayout gateway;
+    TextView gatewayText;
+
+    RelativeLayout sandbox;
+    TextView sandboxText;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +225,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, WaterMarkActivity.class));
+            }
+        });
+
+        gateway = (RelativeLayout) findViewById(R.id.gateway);
+        gatewayText = (TextView) gateway.findViewById(R.id.text);
+        gatewayText.setText("12.网关测试工具");
+        gateway.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, GateWayActivity.class));
             }
         });
 

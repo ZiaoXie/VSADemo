@@ -10,7 +10,9 @@ import android.provider.Telephony;
 import android.widget.Toast;
 
 import com.zzy.vsa.demo.appenv.AppEnv;
+import com.zzy.vsa.demo.util.FileUtil;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,14 @@ public class BaseApplication extends Application {
 
             notificationManager.createNotificationChannels(channels);
 
+            File download = new File(FileUtil.getAppRootPath() + File.separator + "download");
+            if(download.exists()){
+                for( File f : download.listFiles()){
+                    if(f.getAbsolutePath().endsWith(".temp")){
+                        f.delete();
+                    }
+                }
+            }
 
         }
     }
