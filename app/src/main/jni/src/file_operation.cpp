@@ -14,7 +14,7 @@ jint copyFile(JNIEnv * env, jclass object, jstring jsrc, jstring jdes) {
      char *des = NULL ;
      src = jni_jstring_to_cstring(env, jsrc);
      des = jni_jstring_to_cstring(env, jdes);
-     if （src = NULL | des = NULL）{
+     if (src = NULL | des = NULL){
         return -1
      }
 
