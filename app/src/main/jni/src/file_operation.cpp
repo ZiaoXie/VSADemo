@@ -33,7 +33,7 @@ jint copyFile(JNIEnv * env, jclass object, jstring jsrc, jstring jdes) {
      }
 
 
-     char str[20];
+     char str[1024];
      int count=0;
      while (count = read(fr,str,20)) {
         write(fw,str,count);
