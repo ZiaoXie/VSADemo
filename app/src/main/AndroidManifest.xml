@@ -153,6 +153,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.copy.CopyActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

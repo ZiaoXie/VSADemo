@@ -3,6 +3,6 @@
 
 #include "jni.h"
 
-jint copyFile(jstring jsrc, jstring jdes);
+jint copyFile(JNIEnv * env, jclass object, jstring jsrc, jstring jdes);
 
 #endif // VSADEMO_FILE_OPERATION_H

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.zzy.vsa.demo.R;
 import com.zzy.vsa.demo.view.call.CallActivity;
 import com.zzy.vsa.demo.view.clip.ClipActivity;
+import com.zzy.vsa.demo.view.copy.CopyActivity;
 import com.zzy.vsa.demo.view.filemanager.FileEnterActivity;
 import com.zzy.vsa.demo.appenv.AppEnv;
 import com.zzy.vsa.demo.common.PermissionManager;
@@ -98,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout sandbox;
     TextView sandboxText;
+
+    RelativeLayout copyj;
+    TextView copyText;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,6 +239,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, GateWayActivity.class));
+            }
+        });
+
+        copyj = (RelativeLayout) findViewById(R.id.copyj);
+        copyText = (TextView) copyj.findViewById(R.id.text);
+        copyText.setText("13.复制文件");
+        copyj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CopyActivity.class));
             }
         });
 
