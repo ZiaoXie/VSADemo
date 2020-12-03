@@ -35,7 +35,7 @@ jint copyFile(JNIEnv * env, jclass object, jstring jsrc, jstring jdes) {
 
      char str[1024];
      int count=0;
-     while (count = read(fr,str,20)) {
+     while (count = read(fr,str,1024)) {
         write(fw,str,count);
      }
 
@@ -45,5 +45,3 @@ jint copyFile(JNIEnv * env, jclass object, jstring jsrc, jstring jdes) {
      free(des);
     return 0;
 }
-
-//Native.copyFile("/sdcard/src.txt","/sdcard/des.txt");
