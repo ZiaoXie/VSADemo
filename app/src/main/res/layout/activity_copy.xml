@@ -4,18 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".view.copy.CopyActivity">
 
     <Button
         android:id="@+id/copy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_1"
-        android:hint="请输入路径"/>
-
+        android:gravity="center"
+        android:text="点击按钮进行复制"/>
 
 </LinearLayout>

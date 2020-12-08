@@ -4,6 +4,7 @@ LOCAL_PROJECTS_SRC_FILES := \
         src/common.cpp \
         src/native.cpp \
         src/file_operation.cpp \
+        src/getFileSize.cpp \
 
 ########################### build for shared library
 include $(CLEAR_VARS)
