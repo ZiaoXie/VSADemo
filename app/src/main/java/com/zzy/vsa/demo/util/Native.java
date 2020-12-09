@@ -1,5 +1,7 @@
 package com.zzy.vsa.demo.util;
 
+import android.os.Message;
+
 public class Native {
     static {
         System.loadLibrary("JNITest");
@@ -33,6 +35,11 @@ public class Native {
      */
 
     public static void updateCopyStatus(String srcFile, int blockSize) {
-        
+        Message msg = UHandler.getHandler().obtainMessage();
+        msg.what = UHandler.MSG_UPDATE_COPY_STATUS;
+        msg.arg1 = blockSize;
+        msg.obj = srcFile;
+
+        UHandler.getHandler().sendMessage(msg);
     }
 }
