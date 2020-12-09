@@ -31,4 +31,8 @@ public class Native {
      * @param file 文件路径
      * @return >= 0 文件大小, < 0 错误码
      */
+
+    public static void updateCopyStatus(String srcFile, int blockSize) {
+        
+    }
 }

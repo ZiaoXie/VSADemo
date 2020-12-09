@@ -5,6 +5,8 @@
 #include "include/common.h"
 #include "include/file_operation.h"
 #include "include/getFileSize.h"
+#include "include/native2java.h"
+
 static JNINativeMethod g_methods[] = {
         {"getJniTestString", "()Ljava/lang/String;", (void *) getJniTestString},
         {"HelloWorld", "()Ljava/lang/String;", (void *) HelloWorld},
@@ -12,8 +14,6 @@ static JNINativeMethod g_methods[] = {
         {"copyFilePart","(Ljava/lang/String;Ljava/lang/String;II)I",(void *) copyFilePart},
         {"truncateFile","(Ljava/lang/String;I)I",(void *) truncateFile},
         {"getFileSize","(Ljava/lang/String;)I",(void *) getFileSize},
-
-
 };
 
 /*
@@ -46,6 +46,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
         return -1;
     }
 
+    native2javaInit(env);
     return JNI_VERSION_1_6;
 }
 
