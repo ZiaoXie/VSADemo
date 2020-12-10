@@ -23,8 +23,8 @@ import java.io.File;
 
 public class CameraEnterActivity extends AppCompatActivity {
 
-    RelativeLayout system, system_video, camera1, camera2;
-    TextView systemText,system_videoText, camera1Text, camera2Text;
+    RelativeLayout system, system_video, camera1, camera2, camera3;
+    TextView systemText,system_videoText, camera1Text, camera2Text, camera3Text;
 
     File cameraSavePath;
     Uri uri;
@@ -63,7 +63,7 @@ public class CameraEnterActivity extends AppCompatActivity {
 
         camera1 = (RelativeLayout) findViewById(R.id.camera1);
         camera1Text = (TextView) camera1.findViewById(R.id.text);
-        camera1Text.setText("自定义相机1");
+        camera1Text.setText("自定义相机1(Android 5.0以上不推荐使用)");
         camera1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +82,17 @@ public class CameraEnterActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(CameraEnterActivity.this, "该功能只能在Android 5.0以上使用", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
 
+
+        camera3 = (RelativeLayout) findViewById(R.id.camera3);
+        camera3Text = (TextView) camera3.findViewById(R.id.text);
+        camera3Text.setText("自定义相机3");
+        camera3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CameraEnterActivity.this, EncodeYUVToH264Activity2.class));
             }
         });
     }

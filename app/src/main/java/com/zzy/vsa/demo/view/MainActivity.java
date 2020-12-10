@@ -33,6 +33,7 @@ import com.zzy.vsa.demo.view.gateway.GateWayActivity;
 import com.zzy.vsa.demo.view.message.ShowMessageActivity;
 import com.zzy.vsa.demo.view.notification.NotificationActivity;
 import com.zzy.vsa.demo.view.remotecontrol.RemoteControlActivity;
+import com.zzy.vsa.demo.view.sandbox.SandBoxActivity;
 import com.zzy.vsa.demo.view.share.ShareActivity;
 import com.zzy.vsa.demo.view.watermark.WaterMarkActivity;
 import com.zzy.vsa.demo.view.webview.ShowHtmlActivity;
@@ -249,6 +250,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CopyActivity.class));
+            }
+        });
+
+        sandbox = (RelativeLayout) findViewById(R.id.sandbox);
+        sandboxText = (TextView) sandbox.findViewById(R.id.text);
+        sandboxText.setText("14.沙箱配置界面");
+        sandbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SandBoxActivity.class));
             }
         });
 

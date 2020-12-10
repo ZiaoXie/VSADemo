@@ -52,11 +52,10 @@
             <include android:id="@+id/watermark"
                 layout="@layout/layout_menu_item"/>
 
-            <include android:id="@+id/copyj"
+            <include android:id="@+id/gateway"
                 layout="@layout/layout_menu_item"/>
 
-
-            <include android:id="@+id/gateway"
+            <include android:id="@+id/copyj"
                 layout="@layout/layout_menu_item"/>
 
             <include android:id="@+id/sandbox"

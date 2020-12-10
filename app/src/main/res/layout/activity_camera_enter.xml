@@ -70,6 +70,22 @@
             <include
                 android:id="@+id/camera2"
                 layout="@layout/layout_menu_item" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="使用MediaCodec进行录制"/>
+
+            <include
+                android:id="@+id/camera3"
+                layout="@layout/layout_menu_item" />
         </LinearLayout>
 
 

@@ -23,7 +23,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.gateway.GateWayActivity"></activity>
+        <activity android:name=".view.camera.EncodeYUVToH264Activity2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".view.sandbox.SandBoxActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".view.gateway.GateWayActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".view.watermark.SurfaceViewWaterMarkActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
