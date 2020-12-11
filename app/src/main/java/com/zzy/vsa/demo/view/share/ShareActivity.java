@@ -9,12 +9,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
@@ -53,7 +55,8 @@ public class ShareActivity extends AppCompatActivity {
     TextView targetfile, targetapk;
     String selectedfile, selectedapk;
 
-    Button selectapk, installapk, installapk2, installapk3;
+    Button selectapk, viewapk, viewapk2, viewapk3;
+    Button installapk, installapk2, installapk3;
 
     Button qqsharedefault;
 
@@ -255,12 +258,18 @@ public class ShareActivity extends AppCompatActivity {
         installapk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                    Toast.makeText(ShareActivity.this, "Android 9.0以上不可用", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(selectedapk)) {
                     return;
                 }
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(UriUtil.getFileContentUri(ShareActivity.this, new File(selectedapk)), "application/vnd.android.package-archive");
-                startActivity(intent);
+                Intent installApp = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                installApp.setData(UriUtil.getFileContentUri(ShareActivity.this, new File(selectedapk)));
+                installApp.putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true);
+                installApp.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+                startActivity(installApp);
 
 
             }
@@ -268,6 +277,57 @@ public class ShareActivity extends AppCompatActivity {
 
         installapk2 = (Button) findViewById(R.id.installapk2);
         installapk2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                    Toast.makeText(ShareActivity.this, "Android 9.0以上不可用", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(selectedapk)) {
+                    return;
+                }
+                Intent installApp = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                installApp.setData(FileUtil.getUriByPath(ShareActivity.this, new File(selectedapk)));
+                installApp.putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true);
+                installApp.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+                startActivity(installApp);
+            }
+        });
+
+        installapk3 = (Button) findViewById(R.id.installapk3);
+        installapk3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                    Toast.makeText(ShareActivity.this, "Android 9.0以上不可用", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(selectedapk)) {
+                    return;
+                }
+                Intent installApp = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                installApp.setData(Uri.fromFile(new File(selectedapk)));
+                installApp.putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true);
+                installApp.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+                startActivity(installApp);
+            }
+        });
+
+        viewapk = (Button) findViewById(R.id.viewapk);
+        viewapk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(selectedapk)) {
+                    return;
+                }
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(UriUtil.getFileContentUri(ShareActivity.this, new File(selectedapk)), "application/vnd.android.package-archive");
+                startActivity(intent);
+            }
+        });
+
+        viewapk2 = (Button) findViewById(R.id.viewapk2);
+        viewapk2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(selectedapk)) {
@@ -280,10 +340,14 @@ public class ShareActivity extends AppCompatActivity {
             }
         });
 
-        installapk3 = (Button) findViewById(R.id.installapk3);
-        installapk3.setOnClickListener(new View.OnClickListener() {
+        viewapk3 = (Button) findViewById(R.id.viewapk3);
+        viewapk3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                    Toast.makeText(ShareActivity.this, "Android 9.0以上不可用", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(selectedapk)) {
                     return;
                 }
@@ -293,6 +357,8 @@ public class ShareActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
     public void initQQShare() {

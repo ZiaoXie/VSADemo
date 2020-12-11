@@ -68,13 +68,15 @@ public class FileOperationHelper {
                 File[] files = oldPath$Name.listFiles();
                 File temp;
                 for (File file : files) {
-                    if(file.isDirectory()){
-                        copyFileAndDir(new File(oldPath$Name.getAbsolutePath() + File.separator + file.getName()),
-                                new File(newFile.getAbsolutePath() + File.separator + file.getName()) );
-                    } else {
-                        copyFileAndDir(new File(oldPath$Name.getAbsolutePath() + File.separator + file.getName()),
-                                new File(newFile.getAbsolutePath() ) );
-                    }
+                    copyFileAndDir(new File(oldPath$Name.getAbsolutePath() + File.separator + file.getName()),
+                            new File(newFile.getAbsolutePath() ) );
+//                    if(file.isDirectory()){
+//
+//                        copyFileAndDir(new File(oldPath$Name.getAbsolutePath() + File.separator + file.getName()),
+//                                new File(newFile.getAbsolutePath() + File.separator + file.getName()) );
+//                    } else {
+//
+//                    }
                 }
             } else {
                 if (!oldPath$Name.exists()) {
@@ -111,7 +113,71 @@ public class FileOperationHelper {
         }
     }
 
+    public boolean move(File oldPath$Name, File newPath$Name){
+        boolean flag = renameFileAndDir(oldPath$Name, newPath$Name);
+        BroadcastUtil.scanFileBroadcast(mContext, oldPath$Name.getAbsolutePath());
+        BroadcastUtil.scanFileBroadcast(mContext, newPath$Name.getAbsolutePath());
+        return flag;
+    }
 
+    /**
+     * 复制单个文件
+     *
+     * @param oldPath$Name String 原文件路径+文件名 如：data/user/0/com.test/files/abc.txt
+     * @param newPath$Name String 复制后路径+文件名 如：data/user/0/com.test/cache/abc.txt
+     * @return <code>true</code> if and only if the file was copied;
+     * <code>false</code> otherwise
+     */
+    private boolean renameFileAndDir(File oldPath$Name, File newPath$Name) {
+        Log.e("move",oldPath$Name + "   " + newPath$Name);
+        try {
+
+            if (oldPath$Name.isDirectory()) {
+                File newFile = new File(newPath$Name+ File.separator + oldPath$Name.getName());
+                if (!newFile.exists()) {
+                    if (!newFile.mkdirs()) {
+                        Log.i("--Method--", "copyFolder: cannot create directory.");
+                        return false;
+                    }
+                }
+                File[] files = oldPath$Name.listFiles();
+                File temp;
+                for (File file : files) {
+                    renameFileAndDir(new File(oldPath$Name.getAbsolutePath() + File.separator + file.getName()),
+                            new File(newFile.getAbsolutePath() ) );
+//                    if(file.isDirectory()){
+//                        renameFileAndDir(new File(oldPath$Name.getAbsolutePath() + File.separator + file.getName()),
+//                                new File(newFile.getAbsolutePath() + File.separator + file.getName()) );
+//                    } else {
+//
+//                    }
+                }
+                oldPath$Name.delete();
+            } else {
+                if (!oldPath$Name.exists()) {
+                    Log.i("--Method--", "copyFile:  oldFile not exist.");
+                    return false;
+                } else if (!oldPath$Name.isFile()) {
+                    Log.i("--Method--", "copyFile:  oldFile not file.");
+                    return false;
+                } else if (!oldPath$Name.canRead()) {
+                    Log.i("--Method--", "copyFile:  oldFile cannot read.");
+                    return false;
+                }
+            /* 如果不需要打log，可以使用下面的语句
+            if (!oldFile.exists() || !oldFile.isFile() || !oldFile.canRead()) {
+                return false;
+            }
+            */
+                oldPath$Name.renameTo(new File(newPath$Name.getAbsolutePath() + File.separator + oldPath$Name.getName()));
+                Log.i("move", "moveFile:" + oldPath$Name.getAbsolutePath() + " to " + newPath$Name.getAbsolutePath());
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
     public void delete(String file){

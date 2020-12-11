@@ -1,15 +1,22 @@
 package com.zzy.vsa.demo.appcase.webview;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.Toast;
 
+import com.zzy.vsa.demo.appenv.AppEnv;
 import com.zzy.vsa.demo.util.FileUtil;
+import com.zzy.vsa.demo.view.fileoperation.FileDownloadActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,11 +25,20 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 
 public class WebDownloadHelper {
 
-    private Context context;
+    private Activity context;
     private String url;
     private String userAgent;
     private String contentDisposition;
@@ -32,7 +48,7 @@ public class WebDownloadHelper {
     private String filename;
     private String destPath;
 
-    public WebDownloadHelper(Context context,String url, String userAgent, String contentDisposition, String mimetype, long contentLength){
+    public WebDownloadHelper(Activity context, String url, String userAgent, String contentDisposition, String mimetype, long contentLength){
         this.context = context;
         this.url = url;
         this.userAgent = userAgent;
@@ -92,7 +108,7 @@ public class WebDownloadHelper {
 
     public class DownloadTask extends AsyncTask<String, Void, Void> {
         // 传递两个参数：URL 和 目标路径
-        private String url;
+        private String downloadurl;
         private String destPath;
 
         @Override
@@ -103,7 +119,7 @@ public class WebDownloadHelper {
         @Override
         protected Void doInBackground(String... params) {
 //            log.debug("doInBackground. url:{}, dest:{}", params[0], params[1]);
-            url = params[0];
+            downloadurl = params[0];
             destPath = params[1];
             OutputStream out = null;
             HttpURLConnection urlConnection = null;
@@ -147,6 +163,88 @@ public class WebDownloadHelper {
             handlerIntent.setDataAndType(uri, mimetype);
             context.startActivity(handlerIntent);
         }
+    }
+
+    public void downloadByOkhttp(){
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                Log.e("tag", "onFailure: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String fileName = FileUtil.initWebDownloaderStorage(URLUtil.guessFileName(url, contentDisposition, mimetype));
+
+//                HttpUrl realUrl = response.request().url();
+//                Log.e("zmm", "real:" + realUrl);
+//                if (realUrl != null) {
+//                    String temp = realUrl.toString();
+//                    temp = temp.substring(temp.lastIndexOf("/") + 1);
+//                    temp = URLDecoder.decode(temp, "UTF-8");
+//                    fileName = FileUtil.getAppRootPath() + File.separator + temp ;
+//                }
+
+                File targetfile = new File(fileName + ".temp");
+                File resfile = new File(fileName);
+
+                if (resfile.exists()){
+                    context.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "该文件已存在", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
+
+                final ResponseBody body = response.body();        // 获取到请求体
+                InputStream inputStream = body.byteStream();    // 转换成字节流
+                final long totallength = body.contentLength();
+
+                long count = 0;
+
+                try {
+                    // 获取到输出流，写入到的地址
+                    FileOutputStream outputStream = new FileOutputStream(targetfile);
+                    int length = -1;
+                    byte[] bytes = new byte[1024 * 10];
+                    while ((length = inputStream.read(bytes)) != -1) {
+                        // 写入文件
+                        outputStream.write(bytes, 0, length);
+                        count += length;
+
+                        final long finalCount = count;
+                        final int finalLenght = length;
+//                        Log.e("tag", "progress" + count + "max" + totallength);
+                    }
+                    inputStream.close();        // 关闭输入流
+                    outputStream.close();       // 关闭输出流
+
+                    targetfile.renameTo(resfile);
+                    context.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "下载完成", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
 

@@ -75,7 +75,7 @@ public class ShowHtmlActivity extends AppCompatActivity {
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 webDownloadHelper = new WebDownloadHelper(ShowHtmlActivity.this, url, userAgent, contentDisposition, mimetype, contentLength);
                 new AlertDialog.Builder(ShowHtmlActivity.this).setTitle("选择文件操作")
-                        .setItems(new String[]{"下载文件方法1(默认浏览器)", "下载文件方法2(DownloadManager)", "下载文件方法3(HttpURLConnection)"}, new DialogInterface.OnClickListener() {
+                        .setItems(new String[]{"下载文件方法1(默认浏览器)", "下载文件方法2(DownloadManager)", "下载文件方法3(HttpURLConnection)","下载文件方法4(Okhttp)"}, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
@@ -87,6 +87,9 @@ public class ShowHtmlActivity extends AppCompatActivity {
                                         break;
                                     case 2:
                                         webDownloadHelper.downloadByURL();
+                                        break;
+                                    case 3:
+                                        webDownloadHelper.downloadByOkhttp();
                                         break;
                                 }
                             }

@@ -122,8 +122,7 @@ public class FileChooseActivity extends AppCompatActivity {
                         fileOperationHelper.copy(new File(path),rootFile);
                         break;
                     case AppEnv.FILE_MOVE:
-                        fileOperationHelper.copy(new File(path),rootFile);
-                        fileOperationHelper.delete(path);
+                        fileOperationHelper.move(new File(path),rootFile);
                         break;
                 }
                 finish();

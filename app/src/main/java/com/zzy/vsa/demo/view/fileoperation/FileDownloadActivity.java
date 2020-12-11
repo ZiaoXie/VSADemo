@@ -56,8 +56,8 @@ public class FileDownloadActivity extends AppCompatActivity {
 
     final String download_path = FileUtil.getAppRootPath() + File.separator + "download";
 
-    final static int DOWNLOAD = 0;
-    final static int CONVERT = 1;
+    final static public int DOWNLOAD = 0;
+    final static public int CONVERT = 1;
 
     ArrayList<FileClassificationBean> document_item = new ArrayList<FileClassificationBean>();
     ArrayList<FileClassificationBean> video_item = new ArrayList<FileClassificationBean>();
@@ -167,7 +167,12 @@ public class FileDownloadActivity extends AppCompatActivity {
                     String temp = realUrl.toString();
                     temp = temp.substring(temp.lastIndexOf("/") + 1);
                     temp = URLDecoder.decode(temp, "UTF-8");
-                    fileName = download_path + File.separator + temp ;
+                    if (current_item.get(position).getViewtype() == FileDownloadActivity.CONVERT){
+                        fileName = download_path + File.separator + temp + ".zip" ;
+                    } else {
+                        fileName = download_path + File.separator + temp ;
+                    }
+
                     if (TextUtils.isEmpty(fileName)){
                         runOnUiThread(new Runnable() {
                             @Override

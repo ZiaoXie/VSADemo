@@ -48,6 +48,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="case 1:调用系统接口分享文本" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="action:Intent.ACTION_SEND;Type:text/plain" />
 
                 <Button
                     android:id="@+id/sharetext1"
@@ -59,6 +63,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="case 2:分享给能处理文本的应用" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PackageManager#queryIntentActivities获取应用"/>
 
                 <Button
                     android:id="@+id/sharetext2"
@@ -109,6 +117,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="case 3:直接发送Intent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="action:Intent.ACTION_SEND，并设置mimetype" />
 
                 <Button
                     android:id="@+id/sharefile1"
@@ -122,6 +134,11 @@
                     android:layout_height="wrap_content"
                     android:text="case 4:筛选能够接收该Intent的应用并显示" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PackageManager#queryIntentActivities获取应用"/>
+
                 <Button
                     android:id="@+id/sharefile2"
                     android:layout_width="wrap_content"
@@ -132,6 +149,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="case 5:ACTION_CHOOSER接口" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置的参数：Intent.EXTRA_INTENT" />
 
                 <Button
                     android:id="@+id/sharefile3"
@@ -144,6 +166,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="case 6:ACTION_PICK_ACTIVITY接口" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置的参数：Intent.EXTRA_INTENT" />
 
                 <Button
                     android:id="@+id/sharefile4"
@@ -156,6 +182,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="case 7:Intent.EXTRA_INITIAL_INTENTS接口" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用Intent.createChooser将多个设置为Intent.ACTION_SEND的Intent转化为一个LabeledIntent" />
 
                 <Button
                     android:id="@+id/sharefile5"
@@ -191,32 +222,78 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="点击此按钮选择要分享的安装包" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="case 8:分享apk" />
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="case 8:分享apk(Intent.ACTION_INSTALL_PACKAGE)" />
 
-                <Button
-                    android:id="@+id/installapk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="系统数据库中的uri"
-                    android:textAllCaps="false" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="该类方法从Android9开始不再支持" />
 
-                <Button
-                    android:id="@+id/installapk2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="fileprovider生成uri"
-                    android:textAllCaps="false" />
+                    <Button
+                        android:id="@+id/installapk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="系统数据库中的uri"
+                        android:textAllCaps="false" />
 
-                <Button
-                    android:id="@+id/installapk3"
-                    android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/installapk2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="fileprovider生成uri"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/installapk3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="file://格式uri(Android9以上不支持)"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="file://格式uri"
-                    android:textAllCaps="false" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="case 9:分享apk(Intent.ACTION_VIEW)" />
+
+                    <Button
+                        android:id="@+id/viewapk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="系统数据库中的uri"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/viewapk2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="fileprovider生成uri"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/viewapk3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="file://格式uri(Android9以上不支持)"
+                        android:textAllCaps="false" />
+
+
+                </LinearLayout>
+
+
+
             </LinearLayout>
 
             <LinearLayout
