@@ -1,7 +1,13 @@
 package com.zzy.vsa.demo.appcase.fileoperation;
 
+import android.app.ProgressDialog;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.ProgressBar;
+
 import com.zzy.vsa.demo.util.Native;
+import com.zzy.vsa.demo.util.UHandler;
 
 
 public class Fileopreration {
@@ -9,21 +15,26 @@ public class Fileopreration {
     public static class CopyPartThread extends Thread {
         private String mSrc;
         private String mdes;
-        private int offset;
-        private int length;
+        private int moffset;
+        private int mlength;
 
-        CopyPartThread(String src, String des, int offset1, int length1) {
+        CopyPartThread(String src, String des, int offset, int length) {
             mSrc = src;
             mdes = des;
-            offset = offset1;
-            length = length1;
+            moffset = offset;
+            mlength = length;
         }
 
         @Override
         public void run() {
             super.run();
 
-            Native.copyFilePart(mSrc, mdes, offset, length);
+            Native.copyFilePart(mSrc, mdes, moffset, mlength);
+
+        }
+
+        public void sendMessage(){
+
         }
     }
 
@@ -37,10 +48,15 @@ public class Fileopreration {
         final int offset3 = offset2 + quater;
         final int offset4 = offset3 + quater;
 
-        new CopyPartThread(selectable,inapt,offset1,quater).start();
-        new CopyPartThread(selectable,inapt,offset2,quater).start();
-        new CopyPartThread(selectable,inapt,offset3,quater).start();
-        new CopyPartThread(selectable,inapt,offset4,a - offset4).start();
 
+        CopyPartThread th1 =  new CopyPartThread(selectable,inapt,offset1,quater);
+        CopyPartThread th2 = new CopyPartThread(selectable,inapt,offset2,quater);
+        CopyPartThread th3 = new CopyPartThread(selectable,inapt,offset3,quater);
+        CopyPartThread th4 = new CopyPartThread(selectable,inapt,offset4,a - offset4);
+
+        th1.start();
+        th2.start();
+        th3.start();
+        th4.start();
     }
 }

@@ -14,11 +14,11 @@ int native2javaInit(JNIEnv * env) {
     return 0;
 }
 
-void native2javaUpdateCopyStatus(JNIEnv * env, jstring src, jint blockSize) {
+void native2javaUpdateCopyStatus(JNIEnv * env, jstring src, jint fileSize, jint blockSize) {
     if (NULL == gNativeClass) return;
 
-    jmethodID method = env->GetStaticMethodID(gNativeClass, "updateCopyStatus", "(Ljava/lang/String;I)V");
+    jmethodID method = env->GetStaticMethodID(gNativeClass, "updateCopyStatus", "(Ljava/lang/String;II)V");
     if (NULL == method) return;
 
-    env->CallStaticVoidMethod(gNativeClass, method, src, blockSize);
+    env->CallStaticVoidMethod(gNativeClass, method, src, fileSize, blockSize);
 }

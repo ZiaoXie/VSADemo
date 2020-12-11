@@ -1,6 +1,13 @@
 package com.zzy.vsa.demo.util;
 
+
 import android.os.Message;
+import android.util.Log;
+
+import com.zzy.vsa.demo.view.copy.CopyActivity;
+
+import java.util.HashMap;
+
 
 public class Native {
     static {
@@ -34,12 +41,16 @@ public class Native {
      * @return >= 0 文件大小, < 0 错误码
      */
 
-    public static void updateCopyStatus(String srcFile, int blockSize) {
-        Message msg = UHandler.getHandler().obtainMessage();
+
+    public static void updateCopyStatus(String srcFile, int fileSize, int count) {
+
+        Log.d("uqdate1111","123");
+        Message msg = new Message();
         msg.what = UHandler.MSG_UPDATE_COPY_STATUS;
-        msg.arg1 = blockSize;
-        msg.obj = srcFile;
+        msg.arg1 = fileSize;
+        msg.arg2 = count;
 
         UHandler.getHandler().sendMessage(msg);
     }
+
 }

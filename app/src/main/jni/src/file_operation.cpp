@@ -1,6 +1,8 @@
 #include "include/file_operation.h"
 #include "include/common.h"
 #include "include/getFileSize.h"
+
+#include "include/native2java.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -59,62 +61,80 @@ jint copyFilePart(JNIEnv * env, jclass object, jstring jsrc,jstring jdes,jint st
      * @param length 要复制的长度
      * @return 0 成功, 其他值 失败
      */
+
+
+//env->CallVoidMethod(self, callback_method_id, count);
      char *src,*des;
-     src = jni_jstring_to_cstring(env, jsrc);
-     des = jni_jstring_to_cstring(env, jdes);
-     if (NULL == src ){
-        return -1;
-     }
-     if (NULL == des){
-        free(src);
-        return -1;
-     }
+     int fr = 0, fw = 0, size = 0;
+     do {
+         src = jni_jstring_to_cstring(env, jsrc);
+         if (NULL == src) break;
 
-     int fr = open(src, O_RDONLY);
-     if (fr < 0) {
-        LOGD("fr failed open");
-        return -2;
-     }
+         des = jni_jstring_to_cstring(env, jdes);
+         if (NULL == des) break;
 
-     int fw = open(des, O_WRONLY | O_CREAT);
-     if (fw < 0)
-     {
-        LOGD("fw failed open ");
-     close(fr);
-     return -3;
-     }
-
-     lseek(fr, startOffset,SEEK_SET);
-     lseek(fw, startOffset,SEEK_SET);
-     char str[1024];
-     int count=0;
+         size = getFileSize_t(src);
+         LOGD("size = %d",size );
 
 
-     LOGD("copyFilePart %s -> %s, %d %d", src, des, startOffset,length);
-    while(true){
-        count = read(fr,str,1024);
-        LOGD("1: %d %d", count,length);
-
-        if(count <= 0){
+         fr = open(src, O_RDONLY);
+         if (fr < 0) {
+            LOGD("fr failed open");
             break;
-        }
+         }
 
-        if(length > count){
-            write(fw,str,count);
-            length = length-count;
-            LOGD("2: %d %d", count,length);
-            continue;
-       }
-       else{
-        write(fw,str,length);
-        LOGD("3: %d %d", count,length);
-        break;
-       }
-    }
-     close(fr);
-     close(fw);
-     free(src);
-     free(des);
+         fw = open(des, O_WRONLY | O_CREAT);
+         if (fw < 0) {
+            LOGD("fw failed open ");
+            break;
+         }
+
+         lseek(fr, startOffset,SEEK_SET);
+         lseek(fw, startOffset,SEEK_SET);
+         char str[1024];
+         int count = 0;
+         int sum = 0;
+
+         LOGD("copyFilePart %s -> %s, %d %d", src, des, startOffset,length);
+         while (true) {
+            count = read(fr,str,1024);
+            LOGD("1: %d %d", count,length);
+
+            if (count <= 0) {
+                break;
+            }
+
+            if(length > count){
+                sum = sum + count;
+                LOGD("GUU %d", sum);
+                if (sum >= size/100) {
+                    native2javaUpdateCopyStatus(env, jdes, size, sum);
+                    sum = 0;
+                }
+                write(fw,str,count);
+                length = length-count;
+                LOGD("2: %d %d", count,length);
+                continue;
+
+            }
+           else {
+                native2javaUpdateCopyStatus(env, jdes, size, sum);
+                native2javaUpdateCopyStatus(env, jdes, size, length);
+                write(fw,str,length);
+                LOGD("3: %d %d", count,length);
+                break;
+           }
+         }
+
+     } while (false);
+
+
+    MEM_FREE(src)
+    MEM_FREE(des)
+    CLOSE_FILE(fr)
+    CLOSE_FILE(fw)
+
+
     return 0;
 
 

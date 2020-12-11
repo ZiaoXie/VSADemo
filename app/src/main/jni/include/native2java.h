@@ -3,6 +3,6 @@
 #include "jni.h"
 
 int native2javaInit(JNIEnv * env);
-void native2javaUpdateCopyStatus(JNIEnv * env, jstring src, jint blockSize);
+void native2javaUpdateCopyStatus(JNIEnv * env, jstring src, jint fileSize, jint blockSize);
 
 #endif //VSADEMO_NATIVE2JAVA_H

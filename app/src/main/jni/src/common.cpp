@@ -23,10 +23,10 @@ jint getFileSize_t(char * file){
     struct stat st;
    int a = stat(file,&st);
 
-    if(a = 0){
+    if(a == 0){
     return st.st_size;
     }
-    else if(a = -1){
+    else if(-1 ==a ){
     return -1;
     }
 }

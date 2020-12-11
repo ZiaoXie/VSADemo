@@ -9,6 +9,11 @@
 #define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))
 #endif// end of NELEM
 
+#define MEM_FREE(p) if(p){ free(p); p=0; }
+
+#define CLOSE_FILE(fd) if(fd>=0){ close(fd); fd=-1;}
+
+
 #define TAG "vsaDemo"
 #define LOGD(...) {__android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__);}
 

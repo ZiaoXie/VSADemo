@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".view.copy.CopyActivity">
 
     <Button
@@ -12,6 +13,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="点击按钮进行复制"/>
+        android:text="choose file for copy"/>
+
+    <ProgressBar
+        android:visibility="invisible"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar_1"
+        android:gravity="center"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:max="100"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pressent"
+        android:visibility="invisible"
+        />
 
 </LinearLayout>
