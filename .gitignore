@@ -1,6 +1,8 @@
 *.iml
 .gradle
 /local.properties
+.idea
+cmake-build-debug
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
