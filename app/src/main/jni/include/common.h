@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <android/log.h>
-#include "jni.h"
+#include <jni.h>
 
 #ifndef NELEM
 #define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))
