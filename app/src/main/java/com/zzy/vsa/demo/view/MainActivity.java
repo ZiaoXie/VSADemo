@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CopyActivity.class));
             }
         });
+        copyj.setVisibility(View.GONE);
 
         sandbox = (RelativeLayout) findViewById(R.id.sandbox);
         sandboxText = (TextView) sandbox.findViewById(R.id.text);
@@ -262,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SandBoxActivity.class));
             }
         });
+        sandbox.setVisibility(View.GONE);
 
         PermissionManager.requestPermission(this, permissions, AppEnv.RequestPermissions);
 

@@ -1,6 +1,7 @@
 package com.zzy.vsa.demo.appcase.fileoperation;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,7 @@ public class FileOperationAdapter extends RecyclerView.Adapter {
             final ConvertHolder myHolder = (ConvertHolder)holder;
 
             myHolder.init();
+            myHolder.filepath = item.get(position).getPath() + ".zip";
             myHolder.type.setText(item.get(position).getSuffix());
             myHolder.download.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -104,7 +106,7 @@ public class FileOperationAdapter extends RecyclerView.Adapter {
             myHolder.open.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FileOpenUtil.openIntent(activity, new File(item.get(position).getPath()));
+                    FileOpenUtil.openIntent(activity, new File(myHolder.filepath));
                 }
             });
 
@@ -133,11 +135,16 @@ public class FileOperationAdapter extends RecyclerView.Adapter {
             myHolder.rollback.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String filepath = item.get(position).getPath();
 
-                    File file = new File(myHolder.filepath);
-                    File target = new File(filepath);
+                    String filepath = item.get(position).getPath();
+                    String targetpath = filepath.substring(0,filepath.lastIndexOf("."));
+                    File file = new File(filepath);
+                    File target = new File(targetpath);
                     file.renameTo(target);
+                    myHolder.filepath = targetpath;
+                    Log.e("rollback",filepath + "  "+ targetpath);
+                    myHolder.downloadresult.setText("恢复的原文件路径："+ targetpath);
+
 
                 }
             });

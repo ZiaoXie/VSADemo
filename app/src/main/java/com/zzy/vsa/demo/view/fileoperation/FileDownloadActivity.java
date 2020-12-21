@@ -184,6 +184,7 @@ public class FileDownloadActivity extends AppCompatActivity {
                         return;
                     }
                     current_item.get(position).setPath(fileName);
+
                 }
 
                 File targetfile = new File(fileName + ".temp");
