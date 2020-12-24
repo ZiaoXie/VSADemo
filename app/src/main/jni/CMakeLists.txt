@@ -8,5 +8,5 @@ file(GLOB sources . *.cpp *.h
         src/*.cpp
 )
 
-set(SOURCE_FILES ${sources})
+set(SOURCE_FILES ${sources} include/copytype.h)
 add_library(vsa_demo_jni ${SOURCE_FILES})

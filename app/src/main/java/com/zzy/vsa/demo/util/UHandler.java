@@ -1,14 +1,9 @@
 package com.zzy.vsa.demo.util;
-
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
-import android.widget.ProgressBar;
-
 import androidx.annotation.NonNull;
-
-import com.zzy.vsa.demo.R;
 import com.zzy.vsa.demo.view.copy.CopyActivity;
 
 public class UHandler implements Handler.Callback {
@@ -46,26 +41,23 @@ public class UHandler implements Handler.Callback {
 
     @Override
     public boolean handleMessage(@NonNull Message message) {
-        Log.d("hand", "123");
         switch (message.what) {
             case MSG_UPDATE_COPY_STATUS:
                 sum = sum + message.arg2;
                 Log.d("arg1", message.arg1 + "");
-                Log.d("sum", sum + "");
+                Log.d("sum++", sum + "");
                 pressent = (int) ((sum / (float) message.arg1) * 100);
                 Log.d("pressent", pressent + "");
 
                 CopyActivity.updateProgress(pressent);
-                if (sum == message.arg1) {
+                if (100 == pressent) {
                     sum = 0;
                     pressent = 0;
                 }
-
                 break;
             default:
                 break;
         }
-
         return true;
     }
 }

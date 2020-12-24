@@ -4,18 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Telephony;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.zzy.vsa.demo.R;
@@ -28,7 +22,6 @@ import com.zzy.vsa.demo.common.PermissionManager;
 import com.zzy.vsa.demo.view.audio.AudioEnterActivity;
 import com.zzy.vsa.demo.view.camera.CameraEnterActivity;
 import com.zzy.vsa.demo.view.fileoperation.FileClassificationActivity;
-import com.zzy.vsa.demo.view.fileoperation.FileOperationActivity;
 import com.zzy.vsa.demo.view.gateway.GateWayActivity;
 import com.zzy.vsa.demo.view.message.ShowMessageActivity;
 import com.zzy.vsa.demo.view.notification.NotificationActivity;
@@ -252,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CopyActivity.class));
             }
         });
-        copyj.setVisibility(View.GONE);
+        //copyj.setVisibility(View.GONE);
 
         sandbox = (RelativeLayout) findViewById(R.id.sandbox);
         sandboxText = (TextView) sandbox.findViewById(R.id.text);
@@ -264,6 +257,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         sandbox.setVisibility(View.GONE);
+
+
 
         PermissionManager.requestPermission(this, permissions, AppEnv.RequestPermissions);
 

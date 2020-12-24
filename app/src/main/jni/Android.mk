@@ -6,6 +6,7 @@ LOCAL_PROJECTS_SRC_FILES := \
         src/file_operation.cpp \
         src/getFileSize.cpp \
         src/native2java.cpp \
+        src/copytype.cpp\
 
 ########################### build for shared library
 include $(CLEAR_VARS)

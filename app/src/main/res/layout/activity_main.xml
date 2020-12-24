@@ -61,6 +61,10 @@
             <include android:id="@+id/sandbox"
                 layout="@layout/layout_menu_item"/>
 
+            <include android:id="@+id/sendj"
+                layout="@layout/layout_menu_item"/>
+
+
 
 
             <Button

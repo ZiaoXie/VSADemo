@@ -10,10 +10,22 @@
 
     <Button
         android:id="@+id/copy"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="choose file for copy"/>
+        android:text="copy file by rw"/>
+    <Button
+        android:id="@+id/copy2"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="copy file by sendfile"/>
+    <Button
+        android:id="@+id/copy3"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="copy file by prw"/>
 
     <ProgressBar
         android:visibility="invisible"

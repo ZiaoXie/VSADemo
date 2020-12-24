@@ -4,7 +4,6 @@
 
 #ifndef ONEAPPLICATION_COM_ZZY_VSA_DEMO_APPCASE_JNITEST_H
 #define ONEAPPLICATION_COM_ZZY_VSA_DEMO_APPCASE_JNITEST_H
-
 #include <jni.h>
 
 jstring getJniTestString(JNIEnv * env, jclass object);

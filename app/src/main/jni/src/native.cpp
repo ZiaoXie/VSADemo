@@ -6,14 +6,14 @@
 #include "include/file_operation.h"
 #include "include/getFileSize.h"
 #include "include/native2java.h"
-
+#include "include/copytype.h"
 static JNINativeMethod g_methods[] = {
         {"getJniTestString", "()Ljava/lang/String;", (void *) getJniTestString},
         {"HelloWorld", "()Ljava/lang/String;", (void *) HelloWorld},
-        {"copyFile", "(Ljava/lang/String;Ljava/lang/String;)I", (void *) copyFile},
-        {"copyFilePart","(Ljava/lang/String;Ljava/lang/String;II)I",(void *) copyFilePart},
-        {"truncateFile","(Ljava/lang/String;I)I",(void *) truncateFile},
+        {"copyFile", "(Ljava/lang/String;Ljava/lang/String;JJI)I", (void *) copyFile},
+        {"truncateFile","(Ljava/lang/String;J)I",(void *) truncateFile},
         {"getFileSize","(Ljava/lang/String;)I",(void *) getFileSize},
+
 };
 
 /*

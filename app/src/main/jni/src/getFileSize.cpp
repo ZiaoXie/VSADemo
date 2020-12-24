@@ -8,11 +8,19 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <cstdlib>
+#include <include/getFileSize.h>
+
 jint getFileSize(JNIEnv * env, jclass object, jstring jfile){
 
-    char *file = jni_jstring_to_cstring(env, jfile);
+    char *file = NULL;
+    file = jni_jstring_to_cstring(env, jfile);
+    if (NULL == file) {
+        return GETFAILED;
+    }
     struct stat st;
     stat(file,&st);
+    free(file);
     return st.st_size;
 }
 
