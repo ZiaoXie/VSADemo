@@ -20,6 +20,10 @@ char* jni_jstring_to_cstring(JNIEnv* env, jstring jstr) {
 }
 
 jint getFileSize_t(char * file){
+    if (NULL == file) {
+        LOGD("getfile_tfailed %s", strerror(errno))
+        return GETFILE_TFAILED;
+    }
     struct stat st;
    int a = stat(file,&st);
 

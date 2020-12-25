@@ -26,11 +26,7 @@
    */
 jint copyFilePart(JNIEnv * env, jstring jsrc, jstring jdes, jint startOffset, jlong length, int fr, int fw, int size){
 
-    LOGD("copyFilePart")
-    LOGD("fr = %d", fr)
-    LOGD("fw = %d", fw)
-    LOGD("sizepart = %d", size)
-    LOGD("length ==%lld", length)
+    LOGD("copyFilePart, fr %d, fw %d, sizebyrw %d, length %lld", fr, fw, size, length)
     lseek(fr, startOffset,SEEK_SET);
     lseek(fw, startOffset,SEEK_SET);
 
@@ -38,7 +34,7 @@ jint copyFilePart(JNIEnv * env, jstring jsrc, jstring jdes, jint startOffset, jl
     int count = 0, sum = 0, sizepercent = size / 100;
     while (true) {
         count = read(fr,str,1024);
-        sum = sum + count;
+
         LOGD("count = %d", count)
         if (count <= 0){
             LOGD("read failed: %s", strerror(errno))
@@ -50,23 +46,22 @@ jint copyFilePart(JNIEnv * env, jstring jsrc, jstring jdes, jint startOffset, jl
                 return WRITE_FAILED;
             }
             length = length-count;
+            sum = sum + count;
             if (sum >= sizepercent) {
-                LOGD("sum = %d", sum)
                 native2javaUpdateCopyStatus(env, jdes, size, sum);
                 sum = 0;
             }
             continue;
         }
         else {
-            native2javaUpdateCopyStatus(env, jdes, size, sum);
-            native2javaUpdateCopyStatus(env, jdes, size, length);
+            native2javaUpdateCopyStatus(env, jdes, size, sum + length);
+
             if (write(fw,str,length) < 0) {
                 LOGD("wrend failed: %s", strerror(errno))
                 return WREND_FAILED;
             }
             break;
         }
-
     }
     return 0;
 }
@@ -90,6 +85,7 @@ jint sendFilePart(JNIEnv * env, jstring jsrc, jstring jdes, jlong offset, jlong 
     }
     if (size % SENDBUF != 0) {
         if (sendfile(fw, fr, &off, size % SENDBUF) < 0) {
+            LOGD("sendfailed %s", strerror(errno))
             return SEND_FAILED;
         }
     }
@@ -97,29 +93,26 @@ jint sendFilePart(JNIEnv * env, jstring jsrc, jstring jdes, jlong offset, jlong 
 }
 jint copyByP(JNIEnv * env, jstring jsrc, jstring jdes, jlong length, jlong offset, int fr, int fw, int size){
     LOGD("copyByP")
-    LOGD("length = %lld",length )
     char buf[BUF_SIZE];
     int count = 0, sum = 0, sizepercent = size / 100;
     off_t off = (off_t)offset;
     while (true) {
         count = pread(fr, buf, BUF_SIZE, off);
-        sum = sum + count;
+
         if (count <= 0) {
             LOGD("pread failed:%s", strerror(errno))
             return PREND_FAILED;
         }
         if (length > BUF_SIZE) {
-            LOGD("count = %d", count)
-            LOGD("sum = %d", sum)
-
+            LOGD("count %d, sum %d", count, sum)
             if ( pwrite(fw, buf, BUF_SIZE, off) < 0) {
                 LOGD("pwrite failed:%s", strerror(errno))
                 return PWRITE_FAILED;
             }
+            sum = sum + count;
             length = length - BUF_SIZE;
             off = off + BUF_SIZE;
             if (sum >= sizepercent) {
-                LOGD("size = %d", size)
                 native2javaUpdateCopyStatus(env, jdes, size, sum);
                 sum = 0;
             }
